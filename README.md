@@ -9,7 +9,9 @@ Using Rhea/Phoebe Sorter is simple. To add a new game to an SD card, create a ne
 
 For multi-disc games, simply append ` - Disc X` to the end of the folder name. For example, `Policenauts (English) - Disc 1`, `D - Disc 2`, or `Phantasmagoria (English) - Disc 6`. Please note that this format must be adhered to for proper processing of multi-disc games.
 
-Once all new game folders have been created on the card (and their disc images reside in their respective folders), simply drag the SD card onto `orbital_organizer.exe` for processing. Rhea/Phoebe Sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
+Once all new game folders have been created on the card (and their disc images reside in their respective folders), simply drag the SD card onto `orbital_organizer.exe` for processing.
+
+Rhea/Phoebe Sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
 
 Please note that Rhea/Phoebe users with a pre-existing SD card must first undergo a migration process described in the [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rhea/phoebe-sd-cards) section.
 
