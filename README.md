@@ -13,6 +13,8 @@ Once all new game folders have been created on the card (and their disc images r
 
 Rhea/Phoebe Sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
 
+Lastly, Rhea/Phoebe Sorter will rebuild RMENU based on all of the processed game list data, rendering the SD card ready for use.
+
 Please note that Rhea/Phoebe users with a pre-existing SD card must first undergo a migration process described in the [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rhea/phoebe-sd-cards) section.
 
 It can be used for both first-time SD card set-up, as well as for users with a pre-existing Rhea/Phoebe SD card.
