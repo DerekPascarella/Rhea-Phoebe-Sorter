@@ -93,7 +93,7 @@ Press Enter to exit.
 
 ```
 
-Afterwards, the structure of the SD card will change.
+Afterwards, the structure of the SD card will change. Notice how games are now stored in folders, each named after the game itself. This is how new games will be added to the SD card in the future before being processed by Rhea/Phoebe Sorter.
 
 ```
 F:\
