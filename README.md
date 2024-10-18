@@ -84,10 +84,10 @@ Reading existing menu data...
 
 Renaming numbered folders...
 
--> Renamed to folder "02" to "Jung Rhythm (English)".
--> Renamed to folder "03" to "Policenauts (English) - Disc 1".
--> Renamed to folder "04" to "Policenauts (English) - Disc 2".
--> Renamed to folder "05" to "Policenauts (English) - Disc 3".
+-> Renamed folder "02" to "Jung Rhythm (English)".
+-> Renamed folder "03" to "Policenauts (English) - Disc 1".
+-> Renamed folder "04" to "Policenauts (English) - Disc 2".
+-> Renamed folder "05" to "Policenauts (English) - Disc 3".
 
 First phase of menu migration is complete!
 
