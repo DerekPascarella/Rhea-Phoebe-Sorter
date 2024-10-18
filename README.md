@@ -43,6 +43,8 @@ Once all new game folders have been created on the card (and their disc images r
 
 Rhea/Phoebe Sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
 
+Please note that in order to change a game's RMENU display name in the future, simply edit the `Name.txt` file inside of its respective numbered folder, then process the SD card again by dragging it onto `orbital_organizer.exe`.
+
 Lastly, Rhea/Phoebe Sorter will rebuild RMENU based on all of the processed game list data, rendering the SD card ready for use. It will also place a text file named `Game_List.txt` in the root of the SD card so users can easily find which numbered folders contain which games.
 
 The process for removing games merely involves deleting the numbered folder containing the game(s) to be removed, then dragging the SD card onto `orbital_organizer.exe` for processing. All folder sorting/renaming and RMENU rebuilding will be handled automatically.
