@@ -246,4 +246,4 @@ F:\
 └── Rhea.ini
 ```
 
-At this stage, the SD card is now ready for use. To add or remove new games, simply follow the steps in the [Basic Usage](#basic-usage) section.
+At this stage, the SD card is now ready for use. To add new games or remove existing games, simply follow the steps in the [Basic Usage](#basic-usage) section.
