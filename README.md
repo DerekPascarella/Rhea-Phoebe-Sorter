@@ -170,7 +170,7 @@ Press Enter to exit.
 
 ```
 
-After this process completes, the SD card structure changes yet again, this time to the unique format used by Rhea/Phoebe Sorter. Notice how metadata (i.e., disc number, release date, version, and region) is explicitly stored directly within the game folder.
+After this process completes, the SD card structure changes yet again, this time to the unique format used by Rhea/Phoebe Sorter. The standard numbered folders are present, however metadata (i.e., disc number, release date, version, and region) is now explicitly stored directly within each game folder.
 
 ```
 F:\
