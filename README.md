@@ -10,7 +10,7 @@ Please note that whether one is setting up a first-time SD card or managing a pr
 ![#f03c15](https://via.placeholder.com/15/f03c15/f03c15.png) **IMPORTANT:** *Rhea/Phoebe users with a pre-existing SD card must first undergo a migration process described in the [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rheaphoebe-sd-cards) section.*
 
 ## Current Version
-Rhea/Phoebe Sorter is currently at version [1.1](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.0/xxxxx).
+Rhea/Phoebe Sorter is currently at version [1.0](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.0/xxxxx).
 
 ## Changelog
 - **Version 1.0 (2024-10-18)**
