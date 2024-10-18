@@ -1,4 +1,4 @@
-# Rhea/Phoebe Sorter v1.0
+# Rhea/Phoebe Sorter
 SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
 
 This utility is designed to streamline the process of adding/removing games from an SD card compared to the traditional RMENU rebuild process.
