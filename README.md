@@ -5,7 +5,7 @@ This utility is designed to streamline the process of adding/removing games from
 
 It can be used for both first-time SD card set-up, as well as for users with a pre-existing Rhea/Phoebe SD card.
 
-Please note that whether one is setting up a first-time SD card or managing a pre-existing one, the `01` folder on the card must contain all of the necessary [RMENU](https://gdemu.wordpress.com/links/) files and folders. With only this `01` folder present on the SD card, the card's structure should appear as follows (with the drive letter `F:` as an example).
+Please note that whether one is setting up a first-time SD card or managing a pre-existing one, the `01` folder on the card must contain all of the necessary [RMENU](https://gdemu.wordpress.com/links/) files and folders. With only this `01` folder present on a brand-new SD card, the card's structure should appear as follows (with the drive letter `F:` as an example).
 
 ```
 F:\
