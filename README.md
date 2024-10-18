@@ -5,6 +5,19 @@ This utility is designed to streamline the process of adding/removing games from
 
 Please note that whether one is setting up a first-time SD card or managing a pre-existing one, the `01` folder on the card must contain all of the necessary [RMENU](https://gdemu.wordpress.com/links/) files and folders.
 
+Please note that Rhea/Phoebe users with a pre-existing SD card must first undergo a migration process described in the [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rhea/phoebe-sd-cards) section.
+
+It can be used for both first-time SD card set-up, as well as for users with a pre-existing Rhea/Phoebe SD card.
+
+## Current Version
+Rhea/Phoebe Sorter is currently at version [1.1](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.0/xxxxx).
+
+## Changelog
+- **Version 1.0 (2024-10-18)**
+    - Initial release.
+
+## Basic Usage
+
 Using Rhea/Phoebe Sorter is simple. To add a new game to an SD card, create a new folder on the root of that card. Next, rename the folder according to whichever name should be displayed in RMENU.
 
 For multi-disc games, simply append ` - Disc X` to the end of the folder name. For example, `Policenauts (English) - Disc 1`, `D - Disc 2`, or `Phantasmagoria (English) - Disc 6`. Please note that this format must be adhered to for proper processing of multi-disc games.
@@ -16,17 +29,6 @@ Rhea/Phoebe Sorter will alphanumerically sort all numbered folders based on game
 Lastly, Rhea/Phoebe Sorter will rebuild RMENU based on all of the processed game list data, rendering the SD card ready for use. It will also place a text file named `Game_List.txt` in the root of the SD card so users can easily find which numbered folders contain which games.
 
 The process for removing games merely involves deleting the numbered folder containing the game(s) to be removed, then dragging the SD card onto `orbital_organizer.exe` for processing. All folder sorting/renaming and RMENU rebuilding will be handled automatically.
-
-Please note that Rhea/Phoebe users with a pre-existing SD card must first undergo a migration process described in the [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rhea/phoebe-sd-cards) section.
-
-It can be used for both first-time SD card set-up, as well as for users with a pre-existing Rhea/Phoebe SD card.
-
-## Current Version
-Rhea/Phoebe Sorter is currently at version [1.1](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.0/xxxxx).
-
-## Changelog
-- **Version 1.0 (2024-10-18)**
-    - Initial release.
 
 ## Menu Migration for Pre-Existing Rhea/Phoebe SD Cards
 For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken.
@@ -227,4 +229,4 @@ F:\
 └── Rhea.ini
 ```
 
-At this stage, the SD card is now ready for use. To add or remove new games, simply follow the steps at the top of this README.
+At this stage, the SD card is now ready for use. To add or remove new games, simply follow the steps in the [Basic Usage](#basic-usage) section.
