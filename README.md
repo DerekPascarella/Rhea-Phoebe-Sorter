@@ -47,7 +47,7 @@ Please note that in order to change any metadata associated with a game in the f
 
 Lastly, Rhea/Phoebe Sorter will rebuild RMENU based on all of the processed game list data, rendering the SD card ready for use. It will also place a text file named `Game_List.txt` in the root of the SD card so users can easily find which numbered folders contain which games.
 
-The process for removing games merely involves deleting the numbered folder containing the game(s) to be removed, then dragging the SD card onto `orbital_organizer.exe` for processing. All folder sorting/renaming and RMENU rebuilding will be handled automatically.
+The process for removing games merely involves deleting the numbered folder(s) containing the game(s) to be removed, then dragging the SD card onto `orbital_organizer.exe` for processing. All folder sorting/renaming and RMENU rebuilding will be handled automatically.
 
 ## Menu Migration for Pre-Existing Rhea/Phoebe SD Cards
 For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken.
