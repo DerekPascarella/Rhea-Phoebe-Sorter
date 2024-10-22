@@ -78,7 +78,7 @@ foreach my $line (&read_file($sd_path_source . "/01/BIN/RMENU/LIST.INI"))
 	# Disc number found.
 	if($line =~ /^(\d{2})\.disc=(\d+)\/(\d+)/ && $1 ne '01')
 	{
-		# Capture disc number of total number of discs.
+		# Capture disc number and total number of discs.
 		my $disc_number = $2;
 		my $total_discs = $3;
 		
