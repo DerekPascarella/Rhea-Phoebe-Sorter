@@ -20,7 +20,7 @@ F:\
     │       ├── CPY.TXT
     │       ├── IP.BIN
     │       └── Z.BIN
-    ├── Rhea.ini
+    ├── Rhea.ini (or Phoebe.ini)
     └── RMENU.exe
 ```
 
