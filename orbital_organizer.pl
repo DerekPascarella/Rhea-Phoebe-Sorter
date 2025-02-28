@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Rhea/Phoebe Sorter v1.0
+# Rhea/Phoebe Sorter v1.1
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -11,6 +11,9 @@ use strict;
 use Encode;
 use File::Find::Rule;
 use Fcntl 'SEEK_SET';
+
+# Set version number.
+my $version = "1.1";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -28,7 +31,7 @@ my $invalid_count = 0;
 # No valid SD card path specified.
 if(!-d $sd_path_source || !-e $sd_path_source || $sd_path_source eq "")
 {
-	print "\nRhea/Phoebe Sorter v1.0\n";
+	print "\nRhea/Phoebe Sorter v" . $version . "\n";
 	print "Written by Derek Pascarella (ateam)\n\n";
 	print "Error: No SD card path specified.\n\n";
 	print "Example Usage: orbital_organizer H:\\\n\n";
@@ -40,7 +43,7 @@ if(!-d $sd_path_source || !-e $sd_path_source || $sd_path_source eq "")
 # SD card path is unreadable.
 elsif(!-R $sd_path_source)
 {
-	print "\nRhea/Phoebe Sorter v1.0\n";
+	print "\nRhea/Phoebe Sorter v" . $version . "\n";
 	print "Written by Derek Pascarella (ateam)\n\n";
 	print "Error: Specified SD card path is unreadable.\n\n";
 	print "Example Usage: orbital_organizer H:\\\n\n";
@@ -51,9 +54,9 @@ elsif(!-R $sd_path_source)
 }
 
 # Status message.
-print "\nRhea/Phoebe Sorter v1.0\n";
+print "\nRhea/Phoebe Sorter v" . $version . "\n";
 print "Written by Derek Pascarella (ateam)\n\n";
-print "Reading SD card...\n\n";
+print "Processing SD card (" . $sd_path_source . "), this will take a few moments...\n\n";
 
 # Create temporary folder for purposes of sorting FAT filesystem.
 mkdir($sd_path_source . "/orbital_organizer_temp/");
@@ -293,7 +296,7 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 	{
 		# Move each file into temporary folder.
 		rename($sd_path_source . "/" . $sd_subfolder . "/" . $game_folder_file,
-		       $sd_path_source . "/orbital_organizer_temp/" . $sd_subfolder . "/" . $game_folder_file);
+			   $sd_path_source . "/orbital_organizer_temp/" . $sd_subfolder . "/" . $game_folder_file);
 	}
 
 	# Close game folder.
@@ -309,7 +312,7 @@ closedir($sd_path_source_handler);
 # No games found on target SD card.
 if(!$game_count_found)
 {
-	print "No games detected on SD card.\n\n";
+	print "No disc image(s) detected on SD card.\n\n";
 	print "Press Enter to exit.\n";
 	<STDIN>;
 
@@ -317,7 +320,7 @@ if(!$game_count_found)
 }
 
 # Prompt before continuing.
-print $game_count_found . " game(s) found on SD card.\n\n";
+print $game_count_found . " disc image(s) found on SD card.\n\n";
 
 # Sleep for three seconds before proceeding.
 sleep(3);
@@ -337,8 +340,22 @@ foreach my $game_name (sort {lc $a cmp lc $b} keys %game_list)
 	}
 	
 	# Print status message.
-	print "[" . $game_name . "]\n";
-	print "   -> Moved \"" . $game_list{$game_name} . "\" -> \"" . $sd_subfolder_new . "\"\n\n";
+	print "  -> Folder " . $sd_subfolder_new . " ";
+
+	if($game_list{$game_name} eq $sd_subfolder_new)
+	{
+		print "(unchanged: ";
+	}
+	elsif($game_list{$game_name} ne $game_name)
+	{
+		print "(previously " . $game_list{$game_name} . ": ";
+	}
+	else
+	{
+		print "(new: ";
+	}
+
+	print $game_name . ")\n";
 	
 	# Add folder name entry to metadata hash for current game, used later to rebuild RMENU.
 	$metadata{$game_name}->{'Folder'} = $sd_subfolder_new;
@@ -354,7 +371,7 @@ foreach my $game_name (sort {lc $a cmp lc $b} keys %game_list)
 	{
 		# Move each file back from temporay game folder.
 		rename($sd_path_source . "/orbital_organizer_temp/" . $game_list{$game_name} . "/" . $game_folder_file,
-		       $sd_path_source . "/" . $sd_subfolder_new . "/" . $game_folder_file);
+			   $sd_path_source . "/" . $sd_subfolder_new . "/" . $game_folder_file);
 	}
 
 	# Close game folder.
@@ -368,7 +385,7 @@ foreach my $game_name (sort {lc $a cmp lc $b} keys %game_list)
 rmdir($sd_path_source . "/orbital_organizer_temp/");
 
 # Print status message.
-print $game_count_found . " game(s) processed!\n\n";
+print "\n" . $game_count_found . " disc image(s) processed!\n\n";
 
 # If invalid game folders were found, list them along with a message.
 if($invalid_count)
@@ -447,7 +464,7 @@ if(-e $sd_path_source . "/01/BIN/mkisofs.exe")
 
 	# Status message.
 	print "RMENU rebuild complete!\n\n";
-	print "A list of games can be found in the \"Game_List.txt\" file in the root of the SD card.\n\n";
+	print "A list of disc images can be found in the \"Game_List.txt\" file in the root of the SD card.\n\n";
 }
 # Otherwise, return an error.
 else
