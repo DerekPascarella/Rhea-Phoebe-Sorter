@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Menu Migrator for Rhea/Phoebe Sorter v1.0
+# Menu Migrator for Rhea/Phoebe Sorter v1.1
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -9,6 +9,9 @@
 use utf8;
 use strict;
 use Encode;
+
+# Set version number.
+my $version = "1.1";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -19,7 +22,7 @@ my $sd_path_source = $ARGV[0];
 # No valid SD card path specified.
 if(!-d $sd_path_source || !-e $sd_path_source || $sd_path_source eq "")
 {
-	print "\nMenu Migrator for Rhea/Phoebe Sorter v1.0\n";
+	print "\nMenu Migrator for Rhea/Phoebe Sorter v" . $version . "\n";
 	print "Written by Derek Pascarella (ateam)\n\n";
 	print "Error: No SD card path specified.\n\n";
 	print "Example Usage: orbital_shift H:\\\n\n";
@@ -31,7 +34,7 @@ if(!-d $sd_path_source || !-e $sd_path_source || $sd_path_source eq "")
 # SD card path is unreadable.
 elsif(!-R $sd_path_source)
 {
-	print "\nMenu Migrator for Rhea/Phoebe Sorter v1.0\n";
+	print "\nMenu Migrator for Rhea/Phoebe Sorter v" . $version . "\n";
 	print "Written by Derek Pascarella (ateam)\n\n";
 	print "Error: Specified SD card path is unreadable.\n\n";
 	print "Example Usage: orbital_shift H:\\\n\n";
@@ -43,7 +46,7 @@ elsif(!-R $sd_path_source)
 # Pre-existing RMENU list not found on SD card.
 elsif(!-e $sd_path_source . "/01/BIN/RMENU/LIST.INI")
 {
-	print "\nMenu Migrator for Rhea/Phoebe Sorter v1.0\n";
+	print "\nMenu Migrator for Rhea/Phoebe Sorter v" . $version . "\n";
 	print "Written by Derek Pascarella (ateam)\n\n";
 	print "Error: No pre-existing RMENU list found on SD card.\n\n";
 	print "Example Usage: orbital_shift H:\\\n\n";
@@ -54,7 +57,7 @@ elsif(!-e $sd_path_source . "/01/BIN/RMENU/LIST.INI")
 }
 
 # Status message.
-print "\nMenu Migrator for Rhea/Phoebe Sorter v1.0\n";
+print "\nMenu Migrator for Rhea/Phoebe Sorter v" . $version . "\n";
 print "Written by Derek Pascarella (ateam)\n\n";
 print "Reading existing menu data...\n\n";
 
@@ -111,7 +114,7 @@ sleep(3);
 foreach my $folder_name (sort {lc $a cmp lc $b} keys %game_list)
 {
 	# Status message.
-	print "-> Renamed to folder \"" . $folder_name . "\" to \"" . $game_list{$folder_name} . "\".\n";
+	print "-> Renamed folder \"" . $folder_name . "\" to \"" . $game_list{$folder_name} . "\".\n";
 
 	# Rename folder.
 	rename($sd_path_source . "//" . $folder_name, $sd_path_source . "//" . $game_list{$folder_name});
