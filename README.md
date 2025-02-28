@@ -96,12 +96,12 @@ To perform migration, drag the SD card onto `orbital_shift.exe`. It will produce
 
 ```
 
-Menu Migrator for Rhea/Phoebe Sorter v1.0
+Menu Migrator for Rhea/Phoebe Sorter v1.1
 Written by Derek Pascarella (ateam)
 
 Reading existing menu data...
 
-4 game folder(s) found on SD card.
+4 disc image folder(s) found on SD card.
 
 Renaming numbered folders...
 
