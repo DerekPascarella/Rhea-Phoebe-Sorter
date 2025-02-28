@@ -99,7 +99,7 @@ foreach my $line (&read_file($sd_path_source . "/01/BIN/RMENU/LIST.INI"))
 }
 
 # Status message.
-print scalar(keys %game_list) . " game folder(s) found on SD card.\n\n";
+print scalar(keys %game_list) . " disc image folder(s) found on SD card.\n\n";
 
 # Sleep for three seconds before proceeding.
 sleep(3);
