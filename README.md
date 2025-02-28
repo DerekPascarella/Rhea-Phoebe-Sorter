@@ -160,26 +160,24 @@ Next, drag the SD card onto `orbital_organizer.exe`, which will produce output s
 
 ```
 
-Rhea/Phoebe Sorter v1.0
+Rhea/Phoebe Sorter 1.1
 Written by Derek Pascarella (ateam)
 
-Reading SD card...
+Processing SD card (F:), this will take a few moments...
 
-4 game(s) found on SD card.
+9 disc image(s) found on SD card.
 
-[Jung Rhythm (English)]
-   -> Moved "Jung Rhythm (English)" -> "02"
+  -> Folder 02 (unchanged: 240p Test Suite)
+  -> Folder 03 (unchanged: 3D Baseball)
+  -> Folder 04 (unchanged: Advanced V.G. (JAP))
+  -> Folder 05 (unchanged: Albert Odyssey - Legend of Eldean)
+  -> Folder 06 (unchanged: Alien Trilogy)
+  -> Folder 07 (unchanged: Alone in the Dark - One-Eyed Jack's Revenge)
+  -> Folder 08 (new: Amok)
+  -> Folder 09 (previously 08: Arcade Gears Vol. 1 - Pu-Li-Ru-La (JAP))
+  -> Folder 10 (previously 09: Assault Suit Leynos 2 (JAP))
 
-[Policenauts (English) - Disc 1]
-   -> Moved "Policenauts (English) - Disc 1" -> "03"
-
-[Policenauts (English) - Disc 2]
-   -> Moved "Policenauts (English) - Disc 2" -> "04"
-
-[Policenauts (English) - Disc 3]
-   -> Moved "Policenauts (English) - Disc 3" -> "05"
-
-4 game(s) processed!
+9 disc image(s) processed!
 
 Rebuidling RMENU...
 
