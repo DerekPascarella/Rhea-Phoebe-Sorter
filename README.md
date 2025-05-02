@@ -5,7 +5,9 @@ This utility is designed to streamline the process of adding/removing games from
 
 It can be used for both first-time SD card set-up, as well as for users with a pre-existing Rhea/Phoebe SD card.
 
-Please note that whether one is setting up a first-time SD card or managing a pre-existing one, the `01` folder on the card must contain all of the necessary [RMENU](https://gdemu.wordpress.com/links/) files and folders. With only this `01` folder present on a brand-new SD card, the card's structure should appear as follows (with the drive letter `F:` as an example).
+Please note that whether one is setting up a first-time SD card or managing a pre-existing one, the `01` folder on the card must contain all of the necessary [RMENU](https://gdemu.wordpress.com/links/) files and folders. Note that [RMenuKai](https://ppcenter.webou.net/pskai/readme_rmenukai.txt) is also supported.
+
+With only this `01` folder present on a brand-new SD card, the card's structure should appear as follows (with the drive letter `F:` as an example).
 
 ```
 F:\
@@ -28,6 +30,8 @@ F:\
 Rhea/Phoebe Sorter is currently at version [1.1](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.1/Rhea-Phobe.Sorter.v1.1.zip).
 
 ## Changelog
+* **Version 1.2 (2025-05-02)**
+  * Added support for virtual folders with RMenuKai.
 * **Version 1.1 (2025-02-28)**
   * Cleaned up status message output to be more compact and descriptive.
 - **Version 1.0 (2024-10-18)**
@@ -39,17 +43,32 @@ Rhea/Phoebe Sorter is currently at version [1.1](https://github.com/DerekPascare
 
 Using Rhea/Phoebe Sorter is simple. To add a new game to an SD card, create a new folder on the root of that card. Next, rename the folder according to whichever name should be displayed in RMENU.
 
-For multi-disc games, simply append ` - Disc X` to the end of the folder name. For example, `Policenauts (English) - Disc 1`, `D - Disc 2`, or `Phantasmagoria (English) - Disc 6`. Please note that this format must be adhered to for proper processing of multi-disc games.
+### Adding New Games
 
-Once all new game folders have been created on the card (and their disc images reside in their respective folders), simply drag the SD card onto `orbital_organizer.exe` for processing.
+1. Create a folder on the root of the SD card, giving it whatever name should appear in the game menu list.
+   - For multi-disc games, append ` - Disc X` to the end of the folder name (e.g., `Policenauts (T-En) - Disc 1`, `Enemy Zero - Disc 2`). This format must be adhered to for proper processing of multi-disc games.
+   - If wishing to present the disc image inside of a virtual folder with RMenuKai, create a file named `Folder.txt` inside of the game folder, storing within it the full path (e.g., `Games/Action/Platformers`).
+3. Copy the disc image (in a [supported format](https://gdemu.wordpress.com/details/rhea-details/)) to the newly created game folder.
+4. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
+   - Rhea/Phoebe sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
 
-Rhea/Phoebe Sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
+### Removing Existing Games
 
-Please note that in order to change any metadata associated with a game in the future (e.g., game name, region), simply edit the corresponding `.txt` file inside of its respective numbered folder (e.g., `Name.txt`, `Region.txt`). Then, process the SD card again by dragging it onto `orbital_organizer.exe`.
+1. Open `Game_List.txt` in the root of the SD card and then identify the numbered folder containing the disc image to be removed.
+2. Remove the identified numbered folder from the SD card.
+3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
-Lastly, Rhea/Phoebe Sorter will rebuild RMENU based on all of the processed game list data, rendering the SD card ready for use. It will also place a text file named `Game_List.txt` in the root of the SD card so users can easily find which numbered folders contain which games.
+### Changing Game Label, Virtual Folder, or Other Metadata
 
-The process for removing games merely involves deleting the numbered folder(s) containing the game(s) to be removed, then dragging the SD card onto `orbital_organizer.exe` for processing. All folder sorting/renaming and RMENU rebuilding will be handled automatically.
+1. Open `Game_List.txt` in the root of the SD card and then identify the numbered folder containing the disc image with metadata to be edited.
+2. Open the identified numbered folder, then open and make changes to the appropriate text file.
+   - `Date.txt` - The game's release date
+   - `Disc.txt` - The game's disc number
+   - `Folder.txt` - Optional virtual folder path for RMenuKai
+   - `Name.txt` - The game name as it appears in the menu list
+   - `Region.txt` - The game's region code
+   - `Version.txt` - The game's version as specified by publisher
+3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
 ## Menu Migration for Pre-Existing Rhea/Phoebe SD Cards
 For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken.
