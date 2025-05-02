@@ -50,7 +50,7 @@ Using Rhea/Phoebe Sorter is simple. To add a new game to an SD card, create a ne
    - If wishing to present the disc image inside of a virtual folder with RMenuKai, create a file named `Folder.txt` inside of the game folder, storing within it the full path (e.g., `Games/Action/Platformers`).
 3. Copy the disc image (in a [supported format](https://gdemu.wordpress.com/details/rhea-details/)) to the newly created game folder.
 4. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
-   - Rhea/Phoebe sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
+   - Rhea/Phoebe Sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
 
 ### Removing Existing Games
 
