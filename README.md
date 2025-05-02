@@ -27,7 +27,7 @@ F:\
 ```
 
 ## Current Version
-Rhea/Phoebe Sorter is currently at version [1.1](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.1/Rhea-Phobe.Sorter.v1.1.zip).
+Rhea/Phoebe Sorter is currently at version [1.2](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.2/Rhea-Phobe.Sorter.v1.2.zip).
 
 ## Changelog
 * **Version 1.2 (2025-05-02)**
