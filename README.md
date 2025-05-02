@@ -30,9 +30,9 @@ F:\
 Rhea/Phoebe Sorter is currently at version [1.2](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.2/Rhea-Phobe.Sorter.v1.2.zip).
 
 ## Changelog
-* **Version 1.2 (2025-05-02)**
+- **Version 1.2 (2025-05-02)**
   * Added support for virtual folders with RMenuKai.
-* **Version 1.1 (2025-02-28)**
+- **Version 1.1 (2025-02-28)**
   * Cleaned up status message output to be more compact and descriptive.
 - **Version 1.0 (2024-10-18)**
     - Initial release.
