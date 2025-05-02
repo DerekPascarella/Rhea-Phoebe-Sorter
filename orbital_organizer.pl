@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Rhea/Phoebe Sorter v1.1
+# Rhea/Phoebe Sorter v1.2
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -13,7 +13,7 @@ use File::Find::Rule;
 use Fcntl 'SEEK_SET';
 
 # Set version number.
-my $version = "1.1";
+my $version = "1.2";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -57,6 +57,8 @@ elsif(!-R $sd_path_source)
 print "\nRhea/Phoebe Sorter v" . $version . "\n";
 print "Written by Derek Pascarella (ateam)\n\n";
 print "Processing SD card (" . $sd_path_source . "), this will take a few moments...\n\n";
+print "WARNING: Do not close this program nor remove the SD card.\n";
+print "         Doing so risks corruption! Please be patient.\n\n";
 
 # Create temporary folder for purposes of sorting FAT filesystem.
 mkdir($sd_path_source . "/orbital_organizer_temp/");
@@ -279,6 +281,20 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 		$metadata{$game_name}->{'Version'} =~ s/^\s+|\s+$//g;
 	}
 
+	# Store key for optional folder path.
+	if(-e $sd_path_source . "/" . $sd_subfolder . "/Folder.txt")
+	{
+		# Read folder path from text file.
+		my $folder = &read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Folder.txt");
+		
+		# Normalize forward slashes.
+		$folder =~ s{^/*}{/};
+		$folder =~ s{/*$}{/}; 
+
+		# Store folder path to hash key.
+		$metadata{$game_name}->{'Virtual Folder'} = $folder;
+	}
+
 	# Add game to hash.
 	$game_list{$game_name} = $sd_subfolder;
 
@@ -354,6 +370,8 @@ foreach my $game_name (sort {lc $a cmp lc $b} keys %game_list)
 	{
 		print "(new: ";
 	}
+
+	print $metadata{$game_name}->{'Virtual Folder'} if(exists $metadata{$game_name}->{'Virtual Folder'});
 
 	print $game_name . ")\n";
 	
@@ -436,6 +454,12 @@ if(-e $sd_path_source . "/01/BIN/mkisofs.exe")
 		}
 
 		$game_list .= "\n";
+
+		# Prepend virtual folder path to game name, if applicable.
+		if(exists $metadata{$game_name}->{'Virtual Folder'})
+		{
+			$game_name_clean = $metadata{$game_name}->{'Virtual Folder'} . $game_name_clean;
+		}
 
 		# Append current game's metadata.
 		$list_file_contents .= sprintf("%02d", $list_count) . ".title=" . $game_name_clean . "\n";
