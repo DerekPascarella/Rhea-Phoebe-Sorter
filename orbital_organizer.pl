@@ -141,6 +141,21 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 		&write_file($sd_path_source . "/" . $sd_subfolder . "/" . "Name.txt", $game_name);
 	}
 
+	# Store key for optional folder path.
+	if(-e $sd_path_source . "/" . $sd_subfolder . "/Folder.txt")
+	{
+		# Read folder path from text file.
+		my $folder = &read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Folder.txt");
+		
+		# Remove trailing/leading whitespace and ormalize forward slashes.
+		$folder =~ s/^\s+|\s+$//g;
+		$folder =~ s{^/*}{/};
+		$folder =~ s{/*$}{/};
+
+		# Prepend virtual folder path to game name.
+		$game_name = $folder . $game_name;
+	}
+
 	# If metadata text files don't exist for current game, extract data from image file.
 	if(!-e $sd_path_source . "/" . $sd_subfolder . "/Name.txt" || !-e $sd_path_source . "/" . $sd_subfolder . "/Disc.txt" ||
 	   !-e $sd_path_source . "/" . $sd_subfolder . "/Region.txt" || !-e $sd_path_source . "/" . $sd_subfolder . "/Version.txt" ||
@@ -281,20 +296,6 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 		$metadata{$game_name}->{'Version'} =~ s/^\s+|\s+$//g;
 	}
 
-	# Store key for optional folder path.
-	if(-e $sd_path_source . "/" . $sd_subfolder . "/Folder.txt")
-	{
-		# Read folder path from text file.
-		my $folder = &read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Folder.txt");
-		
-		# Normalize forward slashes.
-		$folder =~ s{^/*}{/};
-		$folder =~ s{/*$}{/}; 
-
-		# Store folder path to hash key.
-		$metadata{$game_name}->{'Virtual Folder'} = $folder;
-	}
-
 	# Add game to hash.
 	$game_list{$game_name} = $sd_subfolder;
 
@@ -370,8 +371,6 @@ foreach my $game_name (sort {lc $a cmp lc $b} keys %game_list)
 	{
 		print "(new: ";
 	}
-
-	print $metadata{$game_name}->{'Virtual Folder'} if(exists $metadata{$game_name}->{'Virtual Folder'});
 
 	print $game_name . ")\n";
 	
@@ -454,12 +453,6 @@ if(-e $sd_path_source . "/01/BIN/mkisofs.exe")
 		}
 
 		$game_list .= "\n";
-
-		# Prepend virtual folder path to game name, if applicable.
-		if(exists $metadata{$game_name}->{'Virtual Folder'})
-		{
-			$game_name_clean = $metadata{$game_name}->{'Virtual Folder'} . $game_name_clean;
-		}
 
 		# Append current game's metadata.
 		$list_file_contents .= sprintf("%02d", $list_count) . ".title=" . $game_name_clean . "\n";
