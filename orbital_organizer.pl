@@ -57,7 +57,7 @@ elsif(!-R $sd_path_source)
 print "\nRhea/Phoebe Sorter v" . $version . "\n";
 print "Written by Derek Pascarella (ateam)\n\n";
 print "Processing SD card (" . $sd_path_source . "), this will take a few moments...\n\n";
-print "WARNING: Do not close this program nor remove the SD card.\n";
+print "WARNING: Do not close this program or remove the SD card.\n";
 print "         Doing so risks corruption! Please be patient.\n\n";
 
 # Create temporary folder for purposes of sorting FAT filesystem.
