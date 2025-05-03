@@ -30,6 +30,8 @@ F:\
 Rhea/Phoebe Sorter is currently at version [1.2](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.2/Rhea-Phobe.Sorter.v1.2.zip).
 
 ## Changelog
+- **Version 1.3 (2025-05-03)**
+  * Added support for automatic virtual subfolder processing of multi-disc games with RMenuKai.
 - **Version 1.2 (2025-05-02)**
   * Added support for virtual folders with RMenuKai.
 - **Version 1.1 (2025-02-28)**
@@ -69,6 +71,12 @@ Using Rhea/Phoebe Sorter is simple. To add a new game to an SD card, create a ne
    - `Region.txt` - The game's region code
    - `Version.txt` - The game's version as specified by publisher
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
+
+### Multi-Disc Games with RMenuKai
+
+If Rhea/Phoebe Sorter detects RMenuKai on the SD card, the user will be asked if they'd like to use virtual subfolders when processing multi-disc games. If the user says "yes", multi-disc games will only consume one entry on the RMenuKai game list. Upon selecting one of these multi-disc games, a subfolder will be displayed where each separate disc appears as a selectable entry.
+
+For organizational purposes, it's highly recommended that those using RMenuKai allow Rhea/Phoebe Sorter to undergo this intelligent processing of multi-disc games.
 
 ## Menu Migration for Pre-Existing Rhea/Phoebe SD Cards
 For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken.
