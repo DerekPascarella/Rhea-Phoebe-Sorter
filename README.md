@@ -79,7 +79,7 @@ If Rhea/Phoebe Sorter detects RMenuKai on the SD card, the user will be asked if
 For organizational purposes, it's highly recommended that those using RMenuKai allow Rhea/Phoebe Sorter to undergo this intelligent processing of multi-disc games.
 
 ## Menu Migration for Pre-Existing Rhea/Phoebe SD Cards
-For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken.
+For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken. Note that migration from an RmenuKai SD card with virtual subfolders is presently not supported, but will be in a future update.
 
 Before undergoing this migration, consider the following example Rhea/Phoebe SD card.
 
