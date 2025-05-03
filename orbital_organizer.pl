@@ -60,7 +60,7 @@ print "Written by Derek Pascarella (ateam)\n\n";
 # If RMenuKai is detected, prompt for virtual subfolder processing of multi-disc games.
 my $multidisc_subfolders = 0;
 
-if(-e $sd_path_source . "\\01\\BIN\\RMENU\\0.BIN" && find_bytes($sd_path_source . "\\01\\BIN\\RMENU\\0.BIN", "70736B6169"))
+if(-e $sd_path_source . "\\01\\BIN\\RMENU\\0.BIN" && find_bytes($sd_path_source . "\\01\\BIN\\RMENU\\0.BIN", [0x70, 0x73, 0x6B, 0x61, 0x69]))
 {
 	my $option;
 
@@ -86,7 +86,7 @@ print "WARNING: Do not close this program or remove the SD card.\n";
 print "         Doing so risks corruption! Please be patient.\n\n";
 
 # Create temporary folder for purposes of sorting FAT filesystem.
-mkdir($sd_path_source . "/orbital_organizer_temp/");
+mkdir($sd_path_source . "\\orbital_organizer_temp\\");
 
 # Open SD card path for reading.
 opendir(my $sd_path_source_handler, $sd_path_source);
@@ -98,7 +98,7 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 	next if($sd_subfolder =~ /^\./);
 	
 	# Skip all non-folders (e.g., files like "Rhea.ini" or "Phoebe.ini").
-	next if(!-d $sd_path_source . "/" . $sd_subfolder);
+	next if(!-d $sd_path_source . "\\" . $sd_subfolder);
 	
 	# Skip folder "01" containing GDMenu.
 	next if($sd_subfolder eq "01");
@@ -113,13 +113,13 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 	my $sd_subfolder_rule = File::Find::Rule->new;
 	$sd_subfolder_rule->file;
 	$sd_subfolder_rule->maxdepth(1);
-	my @sd_subfolder_files = $sd_subfolder_rule->in($sd_path_source . "/" . $sd_subfolder);
+	my @sd_subfolder_files = $sd_subfolder_rule->in($sd_path_source . "\\" . $sd_subfolder);
 
 	# Set game-found flag to zero.
 	my $game_found = 0;
 
 	# Consider folder as storing a game if "Name.txt" is found.
-	if(-e $sd_path_source . "/" . $sd_subfolder . "/Name.txt")
+	if(-e $sd_path_source . "\\" . $sd_subfolder . "\\Name.txt")
 	{
 		$game_found = 1;
 	}
@@ -140,7 +140,7 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 	{
 		$invalid_count ++;
 
-		rename($sd_path_source . "/" . $sd_subfolder, $sd_path_source . "/INVALID_" . $invalid_count);
+		rename($sd_path_source . "\\" . $sd_subfolder, $sd_path_source . "\\INVALID_" . $invalid_count);
 	}
 
 	# If folder contains no game disc image, skip it.
@@ -150,9 +150,9 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 	my $game_name;
 
 	# Store game name from "Name.txt".
-	if(-e $sd_path_source . "/" . $sd_subfolder . "/" . "Name.txt")
+	if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Name.txt")
 	{
-		$game_name = read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Name.txt");
+		$game_name = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Name.txt");
 		$game_name =~ s/^\s+|\s+$//g;
 	}
 	# Store folder name as game name if it's not a numbered folder (e.g., 07).
@@ -163,14 +163,14 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 		$game_name =~ s/\s+/ /g;
 
 		# Write "Name.txt" file.
-		write_file($sd_path_source . "/" . $sd_subfolder . "/" . "Name.txt", $game_name);
+		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Name.txt", $game_name);
 	}
 
 	# Store key for optional folder path.
-	if(-e $sd_path_source . "/" . $sd_subfolder . "/Folder.txt")
+	if(-e $sd_path_source . "\\" . $sd_subfolder . "\\Folder.txt")
 	{
 		# Read folder path from text file.
-		my $folder = read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Folder.txt");
+		my $folder = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Folder.txt");
 		
 		# Remove trailing/leading whitespace and normalize forward slashes.
 		$folder =~ s/^\s+|\s+$//g;
@@ -182,9 +182,9 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 	}
 
 	# If metadata text files don't exist for current game, extract data from image file.
-	if(!-e $sd_path_source . "/" . $sd_subfolder . "/Name.txt" || !-e $sd_path_source . "/" . $sd_subfolder . "/Disc.txt" ||
-	   !-e $sd_path_source . "/" . $sd_subfolder . "/Region.txt" || !-e $sd_path_source . "/" . $sd_subfolder . "/Version.txt" ||
-	   !-e $sd_path_source . "/" . $sd_subfolder . "/Date.txt")
+	if(!-e $sd_path_source . "\\" . $sd_subfolder . "\\Name.txt" || !-e $sd_path_source . "\\" . $sd_subfolder . "\\Disc.txt" ||
+	   !-e $sd_path_source . "\\" . $sd_subfolder . "\\Region.txt" || !-e $sd_path_source . "\\" . $sd_subfolder . "\\Version.txt" ||
+	   !-e $sd_path_source . "\\" . $sd_subfolder . "\\Date.txt")
 	{
 		# Define beginning of IP.BIN header for seeking out metadata.
 		my @pattern = (0x53, 0x45, 0x47, 0x41, 0x20, 0x53, 0x45, 0x47, 0x41, 0x53, 0x41, 0x54, 0x55, 0x52, 0x4E, 0x20);
@@ -257,7 +257,7 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 				$game_name =~ s/^\s+|\s+$//g;
 
 				# Write previously missing "Name.txt" file.
-				write_file($sd_path_source . "/" . $sd_subfolder . "/" . "Name.txt", $game_name);
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Name.txt", $game_name);
 			}
 
 			# Store game name.
@@ -292,32 +292,32 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 		}
 
 		# Write metadata text files.
-		write_file($sd_path_source . "/" . $sd_subfolder . "/" . "Disc.txt", $metadata{$game_name}->{'Disc'});
-		write_file($sd_path_source . "/" . $sd_subfolder . "/" . "Date.txt", $metadata{$game_name}->{'Date'});
-		write_file($sd_path_source . "/" . $sd_subfolder . "/" . "Region.txt", $metadata{$game_name}->{'Region'});
-		write_file($sd_path_source . "/" . $sd_subfolder . "/" . "Version.txt", $metadata{$game_name}->{'Version'});
+		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt", $metadata{$game_name}->{'Disc'});
+		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt", $metadata{$game_name}->{'Date'});
+		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt", $metadata{$game_name}->{'Region'});
+		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt", $metadata{$game_name}->{'Version'});
 	}
 	# Otherwise, store metadata in hash.
 	else
 	{
 		# Store game name.
-		$metadata{$game_name}->{'Title'} = read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Name.txt");
+		$metadata{$game_name}->{'Title'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Name.txt");
 		$metadata{$game_name}->{'Title'} =~ s/^\s+|\s+$//g;
 
 		# Store disc number.
-		$metadata{$game_name}->{'Disc'} = read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Disc.txt");
+		$metadata{$game_name}->{'Disc'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt");
 		$metadata{$game_name}->{'Disc'} =~ s/^\s+|\s+$//g;
 
 		# Store publish date.
-		$metadata{$game_name}->{'Date'} = read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Date.txt");
+		$metadata{$game_name}->{'Date'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt");
 		$metadata{$game_name}->{'Date'} =~ s/^\s+|\s+$//g;
 
 		# Store region flags.
-		$metadata{$game_name}->{'Region'} = read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Region.txt");
+		$metadata{$game_name}->{'Region'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt");
 		$metadata{$game_name}->{'Region'} =~ s/^\s+|\s+$//g;
 
 		# Store build version.
-		$metadata{$game_name}->{'Version'} = read_file($sd_path_source . "/" . $sd_subfolder . "/" . "Version.txt");
+		$metadata{$game_name}->{'Version'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt");
 		$metadata{$game_name}->{'Version'} =~ s/^\s+|\s+$//g;
 	}
 
@@ -328,24 +328,24 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 	$game_count_found ++;
 
 	# For purposes of FAT sorting, create temporary folder for game.
-	mkdir($sd_path_source . "/orbital_organizer_temp/" . $sd_subfolder);
+	mkdir($sd_path_source . "\\orbital_organizer_temp\\" . $sd_subfolder);
 	
 	# Open game folder for reading.
-	opendir(my $game_folder_handler, $sd_path_source . "/" . $sd_subfolder);
+	opendir(my $game_folder_handler, $sd_path_source . "\\" . $sd_subfolder);
 
 	# Iterate through contents of game folder.
 	foreach my $game_folder_file (readdir($game_folder_handler))
 	{
 		# Move each file into temporary folder.
-		rename($sd_path_source . "/" . $sd_subfolder . "/" . $game_folder_file,
-			   $sd_path_source . "/orbital_organizer_temp/" . $sd_subfolder . "/" . $game_folder_file);
+		rename($sd_path_source . "\\" . $sd_subfolder . "\\" . $game_folder_file,
+			   $sd_path_source . "\\orbital_organizer_temp\\" . $sd_subfolder . "\\" . $game_folder_file);
 	}
 
 	# Close game folder.
 	closedir($game_folder_handler);
 
 	# Remove original game folder.
-	rmdir($sd_path_source . "/" . $sd_subfolder);
+	rmdir($sd_path_source . "\\" . $sd_subfolder);
 }
 
 # Close SD card path.
@@ -403,28 +403,28 @@ foreach my $game_name (sort {lc $a cmp lc $b} keys %game_list)
 	$metadata{$game_name}->{'Folder'} = $sd_subfolder_new;
 
 	# Create game folder based on new sorted name.
-	mkdir($sd_path_source . "/" . $sd_subfolder_new);
+	mkdir($sd_path_source . "\\" . $sd_subfolder_new);
 	
 	# Open temporary game folder for reading.
-	opendir(my $game_folder_handler, $sd_path_source . "/orbital_organizer_temp/" . $game_list{$game_name});
+	opendir(my $game_folder_handler, $sd_path_source . "\\orbital_organizer_temp\\" . $game_list{$game_name});
 
 	# Iterate through contents of temporary game folder.
 	foreach my $game_folder_file (readdir($game_folder_handler))
 	{
 		# Move each file back from temporay game folder.
-		rename($sd_path_source . "/orbital_organizer_temp/" . $game_list{$game_name} . "/" . $game_folder_file,
-			   $sd_path_source . "/" . $sd_subfolder_new . "/" . $game_folder_file);
+		rename($sd_path_source . "\\orbital_organizer_temp\\" . $game_list{$game_name} . "\\" . $game_folder_file,
+			   $sd_path_source . "\\" . $sd_subfolder_new . "\\" . $game_folder_file);
 	}
 
 	# Close game folder.
 	closedir($game_folder_handler);
 
 	# Remove temporary game folder.
-	rmdir($sd_path_source . "/orbital_organizer_temp/" . $game_list{$game_name});
+	rmdir($sd_path_source . "\\orbital_organizer_temp\\" . $game_list{$game_name});
 }
 
 # Remove temporary folder.
-rmdir($sd_path_source . "/orbital_organizer_temp/");
+rmdir($sd_path_source . "\\orbital_organizer_temp\\");
 
 # Print status message.
 print "\n" . $game_count_found . " disc image(s) processed!\n\n";
@@ -444,7 +444,7 @@ if($invalid_count)
 }
 
 # RMENU's "mkisofs.exe" utility is present, proceed with rebuilding RMENU.
-if(-e $sd_path_source . "/01/BIN/mkisofs.exe")
+if(-e $sd_path_source . "\\01\\BIN\\mkisofs.exe")
 {
 	# Status message.
 	print "Rebuidling RMENU...\n\n";
@@ -503,22 +503,19 @@ if(-e $sd_path_source . "/01/BIN/mkisofs.exe")
 		$list_file_contents .= sprintf("%02d", $list_count) . ".date=" . $metadata{$game_name}->{'Date'} . "\n";
 		$list_file_contents .= sprintf("%02d", $list_count) . ".version=";	
 
-		if($metadata{$game_name}->{'Version'} ne "NA")
-		{
-			$list_file_contents .= "V";
-		}
+		$list_file_contents .= "V" if($metadata{$game_name}->{'Version'} ne "NA");
 
 		$list_file_contents .= $metadata{$game_name}->{'Version'} . "\n";
 	}
 
 	# Write "LIST.INI" file.
-	write_file($sd_path_source . "/01/BIN/RMENU/LIST.INI", $list_file_contents);
+	write_file($sd_path_source . "\\01\\BIN\\RMENU\\LIST.INI", $list_file_contents);
 
 	# Write separate game list to root of SD card for user convenience.
-	write_file($sd_path_source . "/Game_List.txt", $game_list);
+	write_file($sd_path_source . "\\Game_List.txt", $game_list);
 
 	# Change to "01" folder and build RMENU iso.
-	chdir($sd_path_source . "/01/");
+	chdir($sd_path_source . "\\01\\");
 	system("BIN\\mkisofs.exe -quiet -sysid \"SEGA SATURN\" -volid \"RMENU\" -volset \"RMENU\" -publisher \"SEGA ENTERPRISES, LTD.\" -preparer \"SEGA ENTERPRISES, LTD.\" -appid \"RMENU\" -abstract \"ABS.TXT\" -copyright \"CPY.TXT\" -biblio \"BIB.TXT\" -generic-boot BIN\\RMENU\\IP.BIN -full-iso9660-filenames -o RMENU.iso BIN\\RMENU");
 
 	# Status message.
@@ -592,29 +589,25 @@ sub read_bytes_at_offset
 	return unpack 'H*', $bytes;
 }
 
-# Subroutine to return true if a specified byte array is found in a specified file.
+# Subroutine to return true if a specified byte pattern is found in a specified file.
 #
 # 1st parameter - Full path of file to read.
-# 2nd parameter - Byte array.
+# 2nd parameter - Arrayref of byte values (e.g., [0x53, 0x45, ...]).
 sub find_bytes
 {
 	my $input_file = $_[0];
 	my $byte_array = $_[1];
 
-	my $target_bytes = pack("H*", $byte_array);
+	my $target_bytes = pack('C*', @$byte_array);
 
 	open my $fh, '<:raw', $input_file or die $!;
 
 	my $buffer;
 	my $chunk_size = 1024 * 1024;
-	my $window = "";
-	
+
 	while(read($fh, $buffer, $chunk_size))
 	{
-		$window .= $buffer;
-		$window = substr($window, -length($target_bytes) * 2) if length($window) > $chunk_size + length($target_bytes);
-		
-		return 1 if index($window, $target_bytes) != -1;
+		return 1 if(index($buffer, $target_bytes) != -1);
 	}
 
 	close $fh;
