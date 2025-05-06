@@ -33,7 +33,7 @@ Rhea/Phoebe Sorter is currently at version [1.3](https://github.com/DerekPascare
 - **Version 1.3 (2025-05-03)**
   * Added support for automatic virtual subfolder processing of multi-disc games with RmenuKai.
 - **Version 1.2 (2025-05-02)**
-  * Added support for virtual subfolders with RmenuKai.
+  * Added support for virtual folders with RmenuKai.
 - **Version 1.1 (2025-02-28)**
   * Cleaned up status message output to be more compact and descriptive.
 - **Version 1.0 (2024-10-18)**
@@ -47,8 +47,10 @@ Using Rhea/Phoebe Sorter is simple, with each operation to be carried out accord
 ### Adding New Games
 
 1. Create a folder on the root of the SD card, giving it whatever name should appear in the game menu list.
-   - For multi-disc games, append ` - Disc X` to the end of the folder name (e.g., `Policenauts (T-En) - Disc 1`, `Enemy Zero - Disc 2`). This format must be adhered to for proper processing of multi-disc games.
-   - If wishing to present the disc image inside of a virtual subfolder with RmenuKai, create a file named `Folder.txt` inside of the game folder, storing within it the full path (e.g., `Games/Action/Platformers`).
+   - For multi-disc games, append ` - Disc X` to the end of the folder name. This format must be adhered to for proper processing of multi-disc games. See examples below.
+     - `Policenauts (T-En) - Disc 1`
+     - `Enemy Zero - Disc 2`
+   - If wishing to present the disc image inside of a virtual folder path with RmenuKai, create a file named `Folder.txt` inside of the game folder, storing within it the full path (e.g., `Games/Action/Platformers`).
 3. Copy the disc image (in a [supported format](https://gdemu.wordpress.com/details/rhea-details/)) to the newly created game folder.
 4. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
    - Rhea/Phoebe Sorter will alphanumerically sort all numbered folders based on game name, as well as automatically extract metadata (i.e., disc number, release date, version, and region) from each disc image so that RMENU can display it. It's worth mentioning that Rhea/Phoebe Sorter's method for extracting said metadata is more reliable and accurate than that of the traditional REMENU rebuild process.
@@ -59,13 +61,13 @@ Using Rhea/Phoebe Sorter is simple, with each operation to be carried out accord
 2. Remove the identified numbered folder from the SD card.
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
-### Changing Game Label, Virtual Subfolders, or Other Metadata
+### Changing Game Label, Virtual Folder Paths, or Other Metadata
 
 1. Open `Game_List.txt` in the root of the SD card and then identify the numbered folder containing the disc image with metadata to be edited.
 2. Open the identified numbered folder, then open and make changes to the appropriate text file.
    - `Date.txt` - The game's release date
    - `Disc.txt` - The game's disc number
-   - `Folder.txt` - Optional virtual subfolder path for RmenuKai
+   - `Folder.txt` - Optional virtual folder path for RmenuKai
    - `Name.txt` - The game name as it appears in the menu list
    - `Region.txt` - The game's region code
    - `Version.txt` - The game's version as specified by publisher
@@ -73,12 +75,12 @@ Using Rhea/Phoebe Sorter is simple, with each operation to be carried out accord
 
 ### Multi-Disc Games with RmenuKai
 
-If Rhea/Phoebe Sorter detects RmenuKai on the SD card, the user will be asked if they'd like to use virtual subfolders when processing multi-disc games. If the user says "yes", multi-disc games will only consume one entry on the RmenuKai game list. Upon selecting one of these multi-disc games, a subfolder will be displayed where each separate disc appears as a selectable entry.
+If Rhea/Phoebe Sorter detects RmenuKai on the SD card, the user will be asked if they'd like to use virtual folders when processing multi-disc games. If the user says "yes", multi-disc games will only consume one entry on the RmenuKai game list. Upon selecting one of these multi-disc games, a subfolder will be displayed where each separate disc appears as a selectable entry.
 
 For organizational purposes, it's highly recommended that those using RmenuKai allow Rhea/Phoebe Sorter to undergo this intelligent processing of multi-disc games.
 
 ## Menu Migration for Pre-Existing Rhea/Phoebe SD Cards
-For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken. Note that migration from an RmenuKai SD card with virtual subfolders is presently not supported, but will be in a future update.
+For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken. Note that migration from an RmenuKai SD card with virtual folders is presently not supported, but will be in a future update.
 
 Before undergoing this migration, consider the following example Rhea/Phoebe SD card.
 
