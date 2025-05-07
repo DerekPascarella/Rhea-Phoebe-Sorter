@@ -68,7 +68,7 @@ Using Rhea/Phoebe Sorter is simple, with each operation to be carried out accord
 2. Remove the identified numbered folder from the SD card.
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
-### Changing Game Label, Virtual Folder Paths, or Other Metadata
+### Changing Game Label, Virtual Folder Paths, and Other Metadata
 
 1. Open `GameList.txt` in the root of the SD card and then identify the numbered folder containing the disc image with metadata to be edited.
 2. Open the identified numbered folder, then open and make changes to the appropriate text file.
