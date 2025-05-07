@@ -87,7 +87,7 @@ The Product ID is a piece of metadata associated with Sega Saturn games which ti
 
 If desired, Rhea/Phoebe Sorter allows users to modify this ID by directly patching the disc image's `IP.BIN` header.
 
-1. Open `GameList.txt` in the root of the SD card and then identify the numbered folder containing the disc image for which the Product ID should be edited.
+1. Open `GameList.txt` in the root of the SD card and then identify the numbered folder containing the disc image for which the Product ID should be modified.
 2. Open the identified numbered folder, then create a file inside of it named `ProductID.txt` containing a new ten-character ID. Fewer than ten characters is acceptable, but any ID exceeding ten characters will be trimmed.
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
