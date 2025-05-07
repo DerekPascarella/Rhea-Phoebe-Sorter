@@ -32,7 +32,7 @@ Rhea/Phoebe Sorter is currently at version [1.4](https://github.com/DerekPascare
 ## Changelog
 - **Version 1.4 (2025-05-07)**
   * Added support for modifying game Product IDs.
-  * Added support for a secondary instance of legacy RMENU to live alongside RmenuKai.
+  * Added support for a secondary instance of legacy RMENU to live alongside, and be accessible from, RmenuKai.
   * Added RmenuKai virtual folder path support during migration process.
   * Fixed issue preventing original game labels from being preserved during migration process if they contained characters that are restricted in file/folder names (thanks [privateye](https://segaxtreme.net/members/privateye.20804/#about)).
   * Added warnings and confirmation prompts to ensure users do not accidentally have files or folders on their SD card open in File Explorer or any other program during processing, as this will result in data corruption.
