@@ -54,7 +54,7 @@ Using Rhea/Phoebe Sorter is simple, with each operation to be carried out accord
 
 1. Create a folder on the root of the SD card, giving it whatever name should appear in the RMENU/RmenuKai game list.
    - Should a label be desired that contains characters that are restricted in file/folder names (i.e., `<`, `>`, `:`, `"`, `/`, `\`, `|`, `?`, and `*`), create a file named `Name.txt` inside of the game disc folder containing said label.
-   - For multi-disc games, append ` - Disc X` to the end of the folder name. This format must be adhered to for proper processing of multi-disc games. See examples below.
+   - For multi-disc games, append ` - Disc X` to the end of the folder name (or to the end of the label stored in `Name.txt`). This format must be adhered to for proper processing of multi-disc games. See examples below.
      - `Policenauts (T-En) - Disc 1`
      - `Enemy Zero - Disc 2`
    - If wishing to present the disc image inside of a virtual folder path with RmenuKai, create a file named `Folder.txt` inside of the game folder, storing within it the full path (e.g., `Games/Action/Platformers`).
