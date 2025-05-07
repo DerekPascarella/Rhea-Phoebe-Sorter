@@ -76,6 +76,7 @@ Using Rhea/Phoebe Sorter is simple, with each operation to be carried out accord
    - `Disc.txt` - The game's disc number
    - `Folder.txt` - Optional virtual folder path for RmenuKai
    - `Name.txt` - The game name as it appears in the menu list
+   - `ProductID.txt` - Optional new Product ID (see the [Modifying Product ID](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter#modifying-product-id) section)
    - `Region.txt` - The game's region code
    - `Version.txt` - The game's version as specified by publisher
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
