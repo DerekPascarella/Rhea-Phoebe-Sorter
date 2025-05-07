@@ -91,7 +91,7 @@ If desired, Rhea/Phoebe Sorter allows users to modify this ID by directly patchi
 2. Open the identified numbered folder, then create a file inside of it named `ProductID.txt` containing a new ten-character ID. Fewer than ten characters is acceptable, but any ID exceeding ten characters will be trimmed.
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
-Note that after adding a `ProductID.txt` file to a game folder and processing the SD card with `orbital_organizer.exe`, it will be automatically removed so that its disc image won't be unnecessarily patched again during future SD card processing.
+Note that after adding a `ProductID.txt` file to a game folder and processing the SD card, it will be automatically removed so that its disc image won't be unnecessarily patched again during future SD card processing.
 
 ### Multi-Disc Games with RmenuKai
 
