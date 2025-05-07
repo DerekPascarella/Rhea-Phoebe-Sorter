@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Rhea/Phoebe Sorter v1.3
+# Rhea/Phoebe Sorter v1.4
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -9,11 +9,12 @@
 use utf8;
 use strict;
 use Encode;
+use File::Copy;
 use File::Find::Rule;
 use Fcntl 'SEEK_SET';
 
 # Set version number.
-my $version = "1.3";
+my $version = "1.4";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -55,24 +56,28 @@ elsif(!-R $sd_path_source)
 
 # Status message.
 print "\nRhea/Phoebe Sorter v" . $version . "\n";
+print "\"The Orbital Organizer\"\n";
 print "Written by Derek Pascarella (ateam)\n\n";
 
-# If RMenuKai is detected, prompt for virtual subfolder processing of multi-disc games.
+# If RmenuKai is detected, prompt for virtual folder processing of multi-disc games.
 my $multidisc_subfolders = 0;
+my $rmenukai_detected = 0;
 
 if(-e $sd_path_source . "\\01\\BIN\\RMENU\\0.BIN" && find_bytes($sd_path_source . "\\01\\BIN\\RMENU\\0.BIN", [0x70, 0x73, 0x6B, 0x61, 0x69]))
 {
-	my $option;
+	$rmenukai_detected = 1;
 
-	print "RMenuKai has been detected on SD card.\n";
+	my $rmenukai_multidisc_prompt;
+
+	print "RmenuKai has been detected on SD card.\n";
 	print "Process multi-disc games using subfolders? (Y/N) ";
 
-	while($option ne "Y" && $option ne "N")
+	while($rmenukai_multidisc_prompt ne "Y" && $rmenukai_multidisc_prompt ne "N")
 	{
-		chop($option = uc(<STDIN>));
+		chop($rmenukai_multidisc_prompt = uc(<STDIN>));
 	}
 
-	if($option eq "Y")
+	if($rmenukai_multidisc_prompt eq "Y")
 	{
 		$multidisc_subfolders = 1;
 	}
@@ -166,30 +171,11 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Name.txt", $game_name);
 	}
 
-	# Store key for optional folder path.
-	if(-e $sd_path_source . "\\" . $sd_subfolder . "\\Folder.txt")
-	{
-		# Read folder path from text file.
-		my $folder = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Folder.txt");
-		
-		# Remove trailing/leading whitespace and normalize forward slashes.
-		$folder =~ s/^\s+|\s+$//g;
-		$folder =~ s{^/*}{/};
-		$folder =~ s{/*$}{/};
-
-		# Prepend virtual folder path to game name.
-		$game_name = $folder . $game_name;
-	}
-
 	# If metadata text files don't exist for current game, extract data from image file.
 	if(!-e $sd_path_source . "\\" . $sd_subfolder . "\\Name.txt" || !-e $sd_path_source . "\\" . $sd_subfolder . "\\Disc.txt" ||
 	   !-e $sd_path_source . "\\" . $sd_subfolder . "\\Region.txt" || !-e $sd_path_source . "\\" . $sd_subfolder . "\\Version.txt" ||
 	   !-e $sd_path_source . "\\" . $sd_subfolder . "\\Date.txt")
 	{
-		# Define beginning of IP.BIN header for seeking out metadata.
-		my @pattern = (0x53, 0x45, 0x47, 0x41, 0x20, 0x53, 0x45, 0x47, 0x41, 0x53, 0x41, 0x54, 0x55, 0x52, 0x4E, 0x20);
-		my $pattern = pack('C*', @pattern);
-
 		# Declare image file variable used to store full path to ISO, IMG, MDF, or CDI.
 		my $image_file;
 
@@ -204,47 +190,93 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 			}
 		}
 
-		# Open image file.
-		open(my $filehandle, '<:raw', $image_file) or die $!;
+		# Search for start of IP.BIN in any valid disc image file.
+		my $offset_found = find_ip_bin_start(@sd_subfolder_files);
 
-		# Set buffer size and other defaults.
-		my $buffer_size = 1024 * 1024;
-		my $buffer;
-		my $offset = 0;
-		my $offset_found;
-		my $pattern_length = length($pattern);
-
-		# Seek through image file until pattern is found.
-		while(read($filehandle, $buffer, $buffer_size))
-		{
-			if(my $pos = index($buffer, $pattern))
-			{
-				if($pos >= 0)
-				{
-					$offset_found = $offset + $pos;
-					
-					last;
-				}
-			}
-
-			$offset += $buffer_size - $pattern_length + 1;
-			
-			seek($filehandle, $offset, SEEK_SET);
-		}
-
-		# Close image file.
-		close $filehandle;
-
-		# Use folder name as game name, as well as placeholders for metadata since no valid header
-		# was found.
+		# If no metadata header was found, use defaults while being sure to honor any existing metadata
+		# text files provided in the folder.
 		if($offset_found eq "")
 		{
-			$game_name = $sd_subfolder;
+			# Use folder name as game name if not defined by "Name.txt" (i.e., variable would be been
+			# previously defined).
+			$game_name = $sd_subfolder if($game_name eq "");
+
+			# Store key for optional folder path.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\Folder.txt")
+			{
+				# Read folder path from text file.
+				my $folder = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Folder.txt");
+				
+				# Remove trailing/leading whitespace and normalize forward slashes.
+				$folder =~ s/^\s+|\s+$//g;
+				$folder =~ s/^\/*/\//;
+				$folder =~ s/\/*$/\//;
+
+				# Prepend virtual folder path to game name.
+				$game_name = $folder . $game_name;
+			}
+
 			$metadata{$game_name}->{'Title'} = $game_name;
-			$metadata{$game_name}->{'Disc'} = "1/1";
-			$metadata{$game_name}->{'Region'} = "NA";
-			$metadata{$game_name}->{'Version'} = "NA";
-			$metadata{$game_name}->{'Date'} = "NA";
+
+			# Store disc number from "Disc.txt" if it exists.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt")
+			{
+				$metadata{$game_name}->{'Disc'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt");
+				$metadata{$game_name}->{'Disc'} =~ s/^\s+|\s+$//g;
+			}
+			# Otherwise, use default.
+			else
+			{
+				$metadata{$game_name}->{'Disc'} = "1/1";
+
+				# Write metadata text file.
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt", $metadata{$game_name}->{'Disc'});
+			}
+
+			# Store region from "Region.txt" if it exists.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt")
+			{
+				$metadata{$game_name}->{'Region'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt");
+				$metadata{$game_name}->{'Region'} =~ s/^\s+|\s+$//g;
+			}
+			# Otherwise, use default.
+			else
+			{
+				$metadata{$game_name}->{'Region'} = "NA";
+
+				# Write metadata text file.
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt", $metadata{$game_name}->{'Region'});
+			}
+
+			# Store version from "Version.txt" if it exists.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt")
+			{
+				$metadata{$game_name}->{'Version'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt");
+				$metadata{$game_name}->{'Version'} =~ s/^\s+|\s+$//g;
+			}
+			# Otherwise, use default.
+			else
+			{
+				$metadata{$game_name}->{'Version'} = "NA";
+
+				# Write metadata text file.
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt", $metadata{$game_name}->{'Version'});
+			}
+
+			# Store date from "Date.txt" if it exists.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt")
+			{
+				$metadata{$game_name}->{'Date'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt");
+				$metadata{$game_name}->{'Date'} =~ s/^\s+|\s+$//g;
+			}
+			# Otherwise, use default.
+			else
+			{
+				$metadata{$game_name}->{'Date'} = "NA";
+
+				# Write metadata text file.
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt", $metadata{$game_name}->{'Date'});
+			}
 		}
 		# Extract metadata from header.
 		else
@@ -258,48 +290,135 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b }  readdir($sd_path_source
 
 				# Write previously missing "Name.txt" file.
 				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Name.txt", $game_name);
+
+				# Store key for optional folder path.
+				if(-e $sd_path_source . "\\" . $sd_subfolder . "\\Folder.txt")
+				{
+					# Read folder path from text file.
+					my $folder = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Folder.txt");
+					
+					# Remove trailing/leading whitespace and normalize forward slashes.
+					$folder =~ s/^\s+|\s+$//g;
+					$folder =~ s/^\/*/\//;
+					$folder =~ s/\/*$/\//;
+
+					# Prepend virtual folder path to game name.
+					$game_name = $folder . $game_name;
+				}
+			}
+			# Otherwise, just look for and store optional folder path key.
+			else
+			{
+				# Store key for optional folder path.
+				if(-e $sd_path_source . "\\" . $sd_subfolder . "\\Folder.txt")
+				{
+					# Read folder path from text file.
+					my $folder = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Folder.txt");
+					
+					# Remove trailing/leading whitespace and normalize forward slashes.
+					$folder =~ s/^\s+|\s+$//g;
+					$folder =~ s/^\/*/\//;
+					$folder =~ s/\/*$/\//;
+
+					# Prepend virtual folder path to game name.
+					$game_name = $folder . $game_name;
+				}
 			}
 
 			# Store game name.
 			$metadata{$game_name}->{'Title'} = $game_name;
 
-			# Extract disc number.
-			$metadata{$game_name}->{'Disc'} = decode('ASCII', pack('H*', read_bytes_at_offset($image_file, 8, $offset_found + 56)));
-			$metadata{$game_name}->{'Disc'} =~ s/.*?CD-//;
-			$metadata{$game_name}->{'Disc'} =~ s/^\s+|\s+$//g;
-
-			# Extract publish date.
-			$metadata{$game_name}->{'Date'} = decode('ASCII', pack('H*', read_bytes_at_offset($image_file, 16, $offset_found + 48)));
-			$metadata{$game_name}->{'Date'} =~ s/CD-.*//;
-			$metadata{$game_name}->{'Date'} =~ s/^\s+|\s+$//g;
-
-			# Extract region flags.
-			$metadata{$game_name}->{'Region'} = decode('ASCII', pack('H*', read_bytes_at_offset($image_file, 16, $offset_found + 64)));
-			$metadata{$game_name}->{'Region'} =~ s/^\s+|\s+$//g;
-
-			# Extract build version.
-			$metadata{$game_name}->{'Version'} = decode('ASCII', pack('H*', read_bytes_at_offset($image_file, 8, $offset_found + 40)));
-			
-			if($metadata{$game_name}->{'Version'} =~ /V/)
+			# Store disc number from "Disc.txt" if it exists.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt")
 			{
-				$metadata{$game_name}->{'Version'} =~ s/.*?V//;
-				$metadata{$game_name}->{'Version'} =~ s/^\s+|\s+$//g;
+				$metadata{$game_name}->{'Disc'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt");
+				$metadata{$game_name}->{'Disc'} =~ s/^\s+|\s+$//g;
 			}
+			# Otherwise, extract from header.
 			else
 			{
-				$metadata{$game_name}->{'Version'} = "NA";
+				$metadata{$game_name}->{'Disc'} = decode('ASCII', pack('H*', read_bytes_at_offset($image_file, 8, $offset_found + 56)));
+				$metadata{$game_name}->{'Disc'} =~ s/.*?CD-//;
+				$metadata{$game_name}->{'Disc'} =~ s/^\s+|\s+$//g;
+				
+				# Perform fixes for incorrectly formatted disc numbers.
+				$metadata{$game_name}->{'Disc'} = "1/1" if($metadata{$game_name}->{'Disc'} eq "");
+				$metadata{$game_name}->{'Disc'} = "1/1" if($metadata{$game_name}->{'Disc'} =~ /CART/);
+
+				# Write metadata text file.
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt", $metadata{$game_name}->{'Disc'});
+			}
+
+			# Store region from "Region.txt" if it exists.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt")
+			{
+				$metadata{$game_name}->{'Region'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt");
+				$metadata{$game_name}->{'Region'} =~ s/^\s+|\s+$//g;
+			}
+			# Otherwise, extract from header.
+			else
+			{
+				$metadata{$game_name}->{'Region'} = decode('ASCII', pack('H*', read_bytes_at_offset($image_file, 16, $offset_found + 64)));
+				$metadata{$game_name}->{'Region'} =~ s/^\s+|\s+$//g;
+
+				# Write metadata text file.
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt", $metadata{$game_name}->{'Region'});
+			}
+
+			# Store version from "Version.txt" if it exists.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt")
+			{
+				$metadata{$game_name}->{'Version'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt");
+				$metadata{$game_name}->{'Version'} =~ s/^\s+|\s+$//g;
+				$metadata{$game_name}->{'Version'} =~ s/.*?V//;
+			}
+			# Otherwise, extract from header.
+			else
+			{
+				$metadata{$game_name}->{'Version'} = decode('ASCII', pack('H*', read_bytes_at_offset($image_file, 8, $offset_found + 40)));
+				$metadata{$game_name}->{'Version'} =~ s/^\s+|\s+$//g;
+				$metadata{$game_name}->{'Version'} =~ s/.*?V//;
+
+				# Write metadata text file.
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt", $metadata{$game_name}->{'Version'});
+			}
+
+			# Store date from "Date.txt" if it exists.
+			if(-e $sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt")
+			{
+				$metadata{$game_name}->{'Date'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt");
+				$metadata{$game_name}->{'Date'} =~ s/^\s+|\s+$//g;
+			}
+			# Otherwise, extract from header.
+			else
+			{
+				$metadata{$game_name}->{'Date'} = decode('ASCII', pack('H*', read_bytes_at_offset($image_file, 16, $offset_found + 48)));
+				$metadata{$game_name}->{'Date'} =~ s/CD-.*//;
+				$metadata{$game_name}->{'Date'} =~ s/^\s+|\s+$//g;
+
+				# Write metadata text file.
+				write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt", $metadata{$game_name}->{'Date'});
 			}
 		}
-
-		# Write metadata text files.
-		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Disc.txt", $metadata{$game_name}->{'Disc'});
-		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Date.txt", $metadata{$game_name}->{'Date'});
-		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Region.txt", $metadata{$game_name}->{'Region'});
-		write_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Version.txt", $metadata{$game_name}->{'Version'});
 	}
 	# Otherwise, store metadata in hash.
 	else
 	{
+		# Store key for optional folder path.
+		if(-e $sd_path_source . "\\" . $sd_subfolder . "\\Folder.txt")
+		{
+			# Read folder path from text file.
+			my $folder = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Folder.txt");
+			
+			# Remove trailing/leading whitespace and normalize forward slashes.
+			$folder =~ s/^\s+|\s+$//g;
+			$folder =~ s/^\/*/\//;
+			$folder =~ s/\/*$/\//;
+
+			# Prepend virtual folder path to game name.
+			$game_name = $folder . $game_name;
+		}
+
 		# Store game name.
 		$metadata{$game_name}->{'Title'} = read_file($sd_path_source . "\\" . $sd_subfolder . "\\" . "Name.txt");
 		$metadata{$game_name}->{'Title'} =~ s/^\s+|\s+$//g;
@@ -388,7 +507,7 @@ foreach my $game_name (sort {lc $a cmp lc $b} keys %game_list)
 	{
 		print "(unchanged: ";
 	}
-	elsif($game_list{$game_name} ne $game_name)
+	elsif($game_list{$game_name} ne $game_name && $game_list{$game_name} =~ /^\d+$/)
 	{
 		print "(previously " . $game_list{$game_name} . ": ";
 	}
@@ -414,6 +533,59 @@ foreach my $game_name (sort {lc $a cmp lc $b} keys %game_list)
 		# Move each file back from temporay game folder.
 		rename($sd_path_source . "\\orbital_organizer_temp\\" . $game_list{$game_name} . "\\" . $game_folder_file,
 			   $sd_path_source . "\\" . $sd_subfolder_new . "\\" . $game_folder_file);
+	}
+
+	# Check for custom Product ID metadata file.
+	if(-e $sd_path_source . "\\" . $sd_subfolder_new . "\\ProductID.txt")
+	{
+		# Store list of all files in subfolder.
+		my $sd_subfolder_rule = File::Find::Rule->new;
+		$sd_subfolder_rule->file;
+		$sd_subfolder_rule->maxdepth(1);
+		my @sd_subfolder_files = $sd_subfolder_rule->in($sd_path_source . "\\" . $sd_subfolder_new);
+
+		# Search for start of IP.BIN in any valid disc image file.
+		my $offset_found = find_ip_bin_start(@sd_subfolder_files);
+
+		# IP.BIN found.
+		if($offset_found ne "")
+		{
+			# Store product ID.
+			my $product_id = read_file($sd_path_source . "\\" . $sd_subfolder_new . "\\ProductID.txt");
+			$product_id =~ s/^\s+|\s+$//g;
+			$product_id = substr($product_id, 0, 10);
+
+			# Convert to hex.
+			my $product_id_hex = unpack("H*", $product_id);
+
+			# Declare image file variable used to store full path to ISO, IMG, MDF, or CDI.
+			my $image_file;
+
+			# Iterate through entire subfolder until target image file is found.
+			foreach(@sd_subfolder_files)
+			{
+				if($_ =~ /\.(cdi|mdf|img|iso)$/i)
+				{
+					$image_file = $_;
+
+					last;
+				}
+			}
+
+			# Patch disc image with new product ID.
+			patch_bytes($image_file, $product_id_hex, $offset_found + 32);
+
+			# Remove custom product ID metadata file.
+			unlink($sd_path_source . "\\" . $sd_subfolder_new . "\\ProductID.txt");
+
+			# Status message.
+			for(1 .. length("  -> Folder " . $sd_subfolder_new . " "))
+			{
+				print " ";
+			}
+
+			print "(product ID patched: " . $product_id . ")\n";
+		}
 	}
 
 	# Close game folder.
@@ -514,13 +686,75 @@ if(-e $sd_path_source . "\\01\\BIN\\mkisofs.exe")
 	# Write separate game list to root of SD card for user convenience.
 	write_file($sd_path_source . "\\Game_List.txt", $game_list);
 
-	# Change to "01" folder and build RMENU iso.
+	# Change to "01" folder and build RMENU ISO.
 	chdir($sd_path_source . "\\01\\");
 	system("BIN\\mkisofs.exe -quiet -sysid \"SEGA SATURN\" -volid \"RMENU\" -volset \"RMENU\" -publisher \"SEGA ENTERPRISES, LTD.\" -preparer \"SEGA ENTERPRISES, LTD.\" -appid \"RMENU\" -abstract \"ABS.TXT\" -copyright \"CPY.TXT\" -biblio \"BIB.TXT\" -generic-boot BIN\\RMENU\\IP.BIN -full-iso9660-filenames -o RMENU.iso BIN\\RMENU");
 
 	# Status message.
 	print "RMENU rebuild complete!\n\n";
-	print "A list of disc images can be found in the \"Game_List.txt\" file in the root of the SD card.\n\n";
+
+	# RmenuKai was detected, but an additional RMENU entry was found on the SD card, so treat it
+	# like an instance of legacy
+	if($rmenukai_detected == 1 && grep { /rmenu/i && $metadata{$_}{'Folder'} ne '01' } keys %metadata)
+	{
+		# Status message.
+		print "In addition to RmenuKai, a second instance of RMENU was detected on SD card.\n";
+		print "It's assumed this instance is present to allow legacy RMENU to exist alongside\n";
+		print "RmenuKai. Would you like to update this instance of RMENU with the latest game\n";
+		print "list? (Y/N) ";
+
+		# Prompt for updating secondary legacy instance of RMENU's game list.
+		my $rmenu_legacy_prompt;
+
+		while($rmenu_legacy_prompt ne "Y" && $rmenu_legacy_prompt ne "N")
+		{
+			chop($rmenu_legacy_prompt = uc(<STDIN>));
+		}
+
+		# Update game list.
+		if($rmenu_legacy_prompt eq "Y")
+		{
+			# Status message.
+			print "\nRebuidling secondary RMENU...\n\n";
+
+			# Store folder name for secondary instance of RMENU.
+			my ($rmenu_legacy_folder) = map { $metadata{$_}{'Folder'} }
+										grep { /rmenu/i && $metadata{$_}{'Folder'} ne '01' }
+										keys %metadata;
+            
+            # Status message.
+            print "Legacy RMENU detected in folder \"" . $rmenu_legacy_folder . "\".\n\n";
+
+			# RMENU's "mkisofs.exe" utility is present, proceed with rebuilding RMENU.
+			if(-e $sd_path_source . "\\" . $rmenu_legacy_folder . "\\BIN\\mkisofs.exe")
+			{
+				# Copy newly generated LIST.INI file.
+				copy($sd_path_source . "\\01\\BIN\\RMENU\\LIST.INI",
+					 $sd_path_source . "\\" . $rmenu_legacy_folder . "\\BIN\\RMENU\\");
+
+				# Change to appropriate folder.
+				chdir($sd_path_source . "\\" . $rmenu_legacy_folder . "\\");
+				
+				# Rebuild RMENU ISO.
+				system("BIN\\mkisofs.exe -quiet -sysid \"SEGA SATURN\" -volid \"RMENU\" -volset \"RMENU\" -publisher \"SEGA ENTERPRISES, LTD.\" -preparer \"SEGA ENTERPRISES, LTD.\" -appid \"RMENU\" -abstract \"ABS.TXT\" -copyright \"CPY.TXT\" -biblio \"BIB.TXT\" -generic-boot BIN\\RMENU\\IP.BIN -full-iso9660-filenames -o RMENU.iso BIN\\RMENU");
+			
+				# Status message.
+				print "Secondary RMENU rebuild complete!\n\n";
+			}
+			# Otherwise, return an error.
+			else
+			{
+				print "The \"mkisofs.exe\" utility was not found at the following path:\n\n";
+				print $sd_path_source . "\\" . $rmenu_legacy_folder . "\\BIN\\mkisofs.exe\n\n";
+				print "Without all RMENU files in folder \"" . $rmenu_legacy_folder . "\" on the SD card, no menu data can be\n";
+				print "rebuilt. Correct this error and then run this utility again.\n\n";
+			}
+		}
+	}
+
+	# Status message.
+	print "A list of disc images can be found in the \"Game_List.txt\" file in the root of\n";
+	print "the SD card.\n\n";
 }
 # Otherwise, return an error.
 else
@@ -564,8 +798,8 @@ sub write_file
 	close $filehandle;
 }
 
-# Subroutine to read a specified number of bytes, starting at a specific offset (in decimal format), of
-# a specified file, returning hexadecimal representation of data.
+# Subroutine to read a specified number of bytes, starting at a specific offset (in decimal
+# format), of a specified file, returning hexadecimal representation of data.
 #
 # 1st parameter - Full path of file to read.
 # 2nd parameter - Number of bytes to read.
@@ -586,7 +820,38 @@ sub read_bytes_at_offset
 	read $filehandle, my $bytes, $byte_count;
 	close $filehandle;
 	
-	return unpack 'H*', $bytes;
+	return unpack("H*", $bytes);
+}
+
+# Subroutine to write a sequence of hexadecimal values at a specified offset (in decimal format) into
+# a specified file, as to patch the existing data at that offset.
+#
+# 1st parameter - Full path of file in which to insert patch data.
+# 2nd parameter - Hexadecimal representation of data to be inserted.
+# 3rd parameter - Offset at which to patch.
+sub patch_bytes
+{
+	my $output_file = $_[0];
+	(my $hex_data = $_[1]) =~ s/\s+//g;
+	my @hex_data_array = split(//, $hex_data);
+	my $patch_offset = $_[2];
+
+	if((stat $output_file)[7] < $patch_offset + (scalar(@hex_data_array) / 2))
+	{
+		die "Offset for patch_bytes is outside of valid range.\n";
+	}
+
+	open my $filehandle, '+<:raw', $output_file or die $!;
+	binmode $filehandle;
+	seek $filehandle, $patch_offset, 0;
+
+	for(my $i = 0; $i < scalar(@hex_data_array); $i += 2)
+	{
+		my($high, $low) = @hex_data_array[$i, $i + 1];
+		print $filehandle pack("H*", $high . $low);
+	}
+
+	close $filehandle;
 }
 
 # Subroutine to return true if a specified byte pattern is found in a specified file.
@@ -613,4 +878,65 @@ sub find_bytes
 	close $fh;
 
 	return 0;
+}
+
+# Subroutine to identify the starting position of IP.BIN in a SEGA Saturn disc image.
+#
+# 1st parameter - Array containing list of full file paths to check.
+sub find_ip_bin_start
+{
+	# Define input parameters.
+	my @sd_subfolder_files = @_;
+
+	# Define beginning of IP.BIN header for seeking out metadata.
+	my @pattern = (0x53, 0x45, 0x47, 0x41, 0x20, 0x53, 0x45, 0x47, 0x41, 0x53, 0x41, 0x54, 0x55, 0x52, 0x4E, 0x20);
+	my $pattern = pack('C*', @pattern);
+
+	# Declare image file variable used to store full path to ISO, IMG, MDF, or CDI.
+	my $image_file;
+
+	# Iterate through entire subfolder until target image file is found.
+	foreach(@sd_subfolder_files)
+	{
+		if($_ =~ /\.(cdi|mdf|img|iso)$/i)
+		{
+			$image_file = $_;
+
+			last;
+		}
+	}
+
+	# Open image file.
+	open(my $filehandle, '<:raw', $image_file) or die $!;
+
+	# Set buffer size and other defaults.
+	my $buffer_size = 1024 * 1024;
+	my $buffer;
+	my $offset = 0;
+	my $offset_found;
+	my $pattern_length = length($pattern);
+
+	# Seek through image file until pattern is found.
+	while(read($filehandle, $buffer, $buffer_size))
+	{
+		if(my $pos = index($buffer, $pattern))
+		{
+			if($pos >= 0)
+			{
+				$offset_found = $offset + $pos;
+				
+				last;
+			}
+		}
+
+		$offset += $buffer_size - $pattern_length + 1;
+		
+		seek($filehandle, $offset, SEEK_SET);
+	}
+
+	# Close image file.
+	close $filehandle;
+
+	# Return found offset, or empty variable.
+	return $offset_found;
 }
