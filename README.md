@@ -13,18 +13,18 @@ With only this `01` folder present on a brand-new SD card, the card's structure 
 F:\
 |   Rhea.ini
 |
-+---01
-|   |   RMENU.exe
-|   |   RMENU.iso
-|   |
-|   \---BIN
-|       |   mkisofs.exe
-|       |
-|       \---RMENU
-|               0.BIN
-|               IP.BIN
-|               LIST.INI
-|               Z.BIN
+\---01
+    |   RMENU.exe
+    |   RMENU.iso
+    |
+    \---BIN
+        |   mkisofs.exe
+        |
+        \---RMENU
+                0.BIN
+                IP.BIN
+                LIST.INI
+                Z.BIN
 ```
 
 ## Current Version
