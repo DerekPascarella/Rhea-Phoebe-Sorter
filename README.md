@@ -215,9 +215,11 @@ Press Enter to exit...
 
 ```
 
-Afterwards, the structure of the SD card will change. Notice how games are now stored in folders named after the game itself. Additionally, `Folder.txt` files are present for games that had virtual folder paths associated with them in RmenuKai, and `Name.txt` files are present for disc images whose labels contained characters that are restricted in file/folder names.
+Afterwards, the structure of the SD card will change. Notice how games are now stored in folders named after the game itself, and `Name.txt` files are present for disc images whose labels contained characters that are restricted in file/folder names.
 
-This structure is how new games will be added to the SD card in the future before being processed by Rhea/Phoebe Sorter.
+Additionally, because this example SD card was formatted for RmenuKai, `Folder.txt` files are present for games that had virtual folder paths associated with them.
+
+This structure, seen below, is how new games will be added to the SD card in the future before being processed by Rhea/Phoebe Sorter.
 
 ```
 F:\
