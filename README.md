@@ -27,6 +27,20 @@ F:\
                 Z.BIN
 ```
 
+## Table of Contents
+
+- [Current Version](#current-version)
+- [Changelog](#changelog)
+- [Known Issues](#known-issues)
+- [Basic Usage](#basic-usage)
+  - [Adding New Games](#adding-new-games)
+  - [Removing Existing Games](#removing-existing-games)
+  - [Changing Game Label, Virtual Folder Paths, and Other Metadata](#changing-game-label-virtual-folder-paths-and-other-metadata)
+  - [Modifying Product ID](#modifying-product-id)
+  - [Multi-Disc Games with RmenuKai](#multi-disc-games-with-rmenukai)
+  - [Adding an Instance of Legacy RMENU Alongside RmenuKai](#adding-an-instance-of-legacy-rmenu-alongside-rmenukai)
+- [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rheaphoebe-sd-cards)
+
 ## Current Version
 Rhea/Phoebe Sorter is currently at version [1.5](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.5/Rhea-Phobe.Sorter.v1.5.zip).
 
