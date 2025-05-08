@@ -122,194 +122,360 @@ Before undergoing this migration, consider the following example Rhea/Phoebe SD 
 
 ```
 F:\
-├── 01
-│   ├── BIN
-│   │   ├── mkisofs.exe
-│   │   ├── mkisofs.txt
-│   │   ├── RMENU
-│   │   │   ├── 0.BIN
-│   │   │   ├── ABS.TXT
-│   │   │   ├── BIB.TXT
-│   │   │   ├── CPY.TXT
-│   │   │   ├── IP.BIN
-│   │   │   ├── LIST.INI
-│   │   │   └── Z.BIN
-│   │   └── titles.db
-│   ├── RMENU.exe
-│   └── RMENU.iso
-├── 02
-│   ├── JungRhythmEnglishSegaSaturn.ccd
-│   ├── JungRhythmEnglishSegaSaturn.img
-│   └── JungRhythmEnglishSegaSaturn.sub
-├── 03
-│   ├── POLICENAUTS_D1.ccd
-│   ├── POLICENAUTS_D1.img
-│   └── POLICENAUTS_D1.sub
-├── 04
-│   ├── POLICENAUTS_D2.ccd
-│   ├── POLICENAUTS_D2.img
-│   └── POLICENAUTS_D2.sub
-├── 05
-│   ├── POLICENAUTS_D3.ccd
-│   ├── POLICENAUTS_D3.img
-│   └── POLICENAUTS_D3.sub
-└── Rhea.ini
+|   Rhea.ini
+|
++---02
+|       Bootleg Sampler (USA).ccd
+|       Bootleg Sampler (USA).img
+|       Bootleg Sampler (USA).sub
+|
++---01
+|   |   RMENU.exe
+|   |   RMENU.iso
+|   |
+|   \---BIN
+|       |   mkisofs.exe
+|       |
+|       \---RMENU
+|               0.BIN
+|               IP.BIN
+|               LIST.INI
+|               RMENU.0.BIN
+|               Z.BIN
+|
++---03
+|       game.ccd
+|       game.img
+|       game.sub
+|
++---04
+|       IMAGE.ccd
+|       IMAGE.img
+|       IMAGE.sub
+|
++---05
+|       DAYTONA USA C.C.E. NET LINK EDITION.ccd
+|       DAYTONA USA C.C.E. NET LINK EDITION.img
+|       DAYTONA USA C.C.E. NET LINK EDITION.sub
+|
++---06
+|       Advanced V.G. (Japan).ccd
+|       Advanced V.G. (Japan).img
+|       Advanced V.G. (Japan).sub
+|
++---07
+|       Grandia (English v1.1.1) (Disc 1).ccd
+|       Grandia (English v1.1.1) (Disc 1).img
+|       Grandia (English v1.1.1) (Disc 1).sub
+|
+\---08
+        Grandia (English v1.1.1) (Disc 2).ccd
+        Grandia (English v1.1.1) (Disc 2).img
+        Grandia (English v1.1.1) (Disc 2).sub
 ```
 
 To perform migration, drag the SD card onto `orbital_shift.exe`. It will produce output similar to the below.
 
 ```
 
-Menu Migrator for Rhea/Phoebe Sorter v1.1
+Menu Migrator for Rhea/Phoebe Sorter v1.4
+"The Orbital Shift"
 Written by Derek Pascarella (ateam)
+
+WARNING: Before proceeding, ensure that no files or folders on SD card (F:)
+         are open in File Explorer or any other program. Failure to do so
+         will result in data corruption!
+
+Press Enter to continue...
 
 Reading existing menu data...
 
-4 disc image folder(s) found on SD card.
+RmenuKai has been detected on SD card. Virtual folder paths will be honored
+during migration process.
+
+7 disc image folder(s) found on SD card.
 
 Renaming numbered folders...
 
--> Renamed folder "02" to "Jung Rhythm (English)".
--> Renamed folder "03" to "Policenauts (English) - Disc 1".
--> Renamed folder "04" to "Policenauts (English) - Disc 2".
--> Renamed folder "05" to "Policenauts (English) - Disc 3".
+-> Renamed folder "02" to "Bootleg Sampler (Version 1)"
+-> Renamed folder "03" to "Blue Skies (PRGE 2022 - Game Pad Version)"
+   Original RmenuKai title preserved in "Name.txt" file (Blue Skies (PRGE 2022: Game Pad Version))
+-> Renamed folder "04" to "Alphaville - The Breathtaking Blue"
+   Original RmenuKai title preserved in "Name.txt" file (Alphaville: The Breathtaking Blue)
+-> Renamed folder "05" to "Daytona USA CCE"
+-> Renamed folder "06" to "Advanced V.G. (JP)"
+-> Renamed folder "07" to "Grandia (T-En) - Disc 1"
+-> Renamed folder "08" to "Grandia (T-En) - Disc 2"
 
 First phase of menu migration is complete!
 
 Next, drag SD card onto "orbital_organizer.exe" to rebuild RMENU.
 
-Press Enter to exit.
+Press Enter to exit...
 
 ```
 
-Afterwards, the structure of the SD card will change. Notice how games are now stored in folders named after the game itself. This is how new games will be added to the SD card in the future before being processed by Rhea/Phoebe Sorter.
+Afterwards, the structure of the SD card will change. Notice how games are now stored in folders named after the game itself. Additionally, `Folder.txt` files are present for games that had virtual folder paths associated with them in RmenuKai, and `Name.txt` files are present for disc images whose labels contained characters that are restricted in file/folder names.
+
+This structure is how new games will be added to the SD card in the future before being processed by Rhea/Phoebe Sorter.
 
 ```
 F:\
-├── 01
-│   ├── BIN
-│   │   ├── mkisofs.exe
-│   │   ├── mkisofs.txt
-│   │   ├── RMENU
-│   │   │   ├── 0.BIN
-│   │   │   ├── ABS.TXT
-│   │   │   ├── BIB.TXT
-│   │   │   ├── CPY.TXT
-│   │   │   ├── IP.BIN
-│   │   │   ├── LIST.INI
-│   │   │   └── Z.BIN
-│   │   └── titles.db
-│   ├── RMENU.exe
-│   └── RMENU.iso
-├── Jung Rhythm (English)
-│   ├── JungRhythmEnglishSegaSaturn.ccd
-│   ├── JungRhythmEnglishSegaSaturn.img
-│   └── JungRhythmEnglishSegaSaturn.sub
-├── Policenauts (English) - Disc 1
-│   ├── POLICENAUTS_D1.ccd
-│   ├── POLICENAUTS_D1.img
-│   └── POLICENAUTS_D1.sub
-├── Policenauts (English) - Disc 2
-│   ├── POLICENAUTS_D2.ccd
-│   ├── POLICENAUTS_D2.img
-│   └── POLICENAUTS_D2.sub
-├── Policenauts (English) - Disc 3
-│   ├── POLICENAUTS_D3.ccd
-│   ├── POLICENAUTS_D3.img
-│   └── POLICENAUTS_D3.sub
-└── Rhea.ini
+|   Rhea.ini
+|
++---01
+|   |   RMENU.exe
+|   |   RMENU.iso
+|   |
+|   \---BIN
+|       |   mkisofs.exe
+|       |
+|       \---RMENU
+|               0.BIN
+|               IP.BIN
+|               LIST.INI
+|               RMENU.0.BIN
+|               Z.BIN
+|
++---Advanced V.G. (JP)
+|       Advanced V.G. (Japan).ccd
+|       Advanced V.G. (Japan).img
+|       Advanced V.G. (Japan).sub
+|
++---Daytona USA CCE
+|       DAYTONA USA C.C.E. NET LINK EDITION.ccd
+|       DAYTONA USA C.C.E. NET LINK EDITION.img
+|       DAYTONA USA C.C.E. NET LINK EDITION.sub
+|       Folder.txt
+|
++---Bootleg Sampler (Version 1)
+|       Bootleg Sampler (USA).ccd
+|       Bootleg Sampler (USA).img
+|       Bootleg Sampler (USA).sub
+|       Folder.txt
+|
++---Blue Skies (PRGE 2022 - Game Pad Version)
+|       game.ccd
+|       game.img
+|       game.sub
+|       Folder.txt
+|       Name.txt
+|
++---Alphaville - The Breathtaking Blue
+|       IMAGE.ccd
+|       IMAGE.img
+|       IMAGE.sub
+|       Folder.txt
+|       Name.txt
+|
++---Grandia (T-En) - Disc 1
+|       Grandia (English v1.1.1) (Disc 1).ccd
+|       Grandia (English v1.1.1) (Disc 1).img
+|       Grandia (English v1.1.1) (Disc 1).sub
+|
+\---Grandia (T-En) - Disc 2
+        Grandia (English v1.1.1) (Disc 2).ccd
+        Grandia (English v1.1.1) (Disc 2).img
+        Grandia (English v1.1.1) (Disc 2).sub
 ```
 
 Next, drag the SD card onto `orbital_organizer.exe`, which will produce output similar to the below.
 
 ```
 
-Rhea/Phoebe Sorter 1.1
+Rhea/Phoebe Sorter v1.4
+"The Orbital Organizer"
 Written by Derek Pascarella (ateam)
+
+WARNING: Before proceeding, ensure that no files or folders on SD card (F:)
+         are open in File Explorer or any other program. Failure to do so
+         will result in data corruption!
+
+Press Enter to continue...
+
+RmenuKai has been detected on SD card. Process multi-disc games using
+subfolders (i.e., "Disc 1")? (Y/N) y
 
 Processing SD card (F:), this will take a few moments...
 
-9 disc image(s) found on SD card.
+WARNING: Do not close this program or remove SD card! Doing so will result in
+         data corruption. Please be patient.
 
-  -> Folder 02 (unchanged: 240p Test Suite)
-  -> Folder 03 (unchanged: 3D Baseball)
-  -> Folder 04 (unchanged: Advanced V.G. (JAP))
-  -> Folder 05 (unchanged: Albert Odyssey - Legend of Eldean)
-  -> Folder 06 (unchanged: Alien Trilogy)
-  -> Folder 07 (unchanged: Alone in the Dark - One-Eyed Jack's Revenge)
-  -> Folder 08 (new: Amok)
-  -> Folder 09 (previously 08: Arcade Gears Vol. 1 - Pu-Li-Ru-La (JAP))
-  -> Folder 10 (previously 09: Assault Suit Leynos 2 (JAP))
+7 disc image(s) found on SD card.
 
-9 disc image(s) processed!
+  -> Folder 02 (new: /-Demo Discs-/Bootleg Sampler (Version 1))
+  -> Folder 03 (new: /-Homebrew-/Blue Skies (PRGE 2022: Game Pad Version))
+  -> Folder 04 (new: /-Media-/-CD+G-/Alphaville: The Breathtaking Blue)
+  -> Folder 05 (new: /-NetLink-/Daytona USA CCE)
+  -> Folder 06 (new: Advanced V.G. (JP))
+  -> Folder 07 (new: Grandia (T-En) - Disc 1)
+  -> Folder 08 (new: Grandia (T-En) - Disc 2)
+
+7 disc image(s) processed!
 
 Rebuidling RMENU...
 
 RMENU rebuild complete!
 
-A list of games can be found in the "Game_List.txt" file in the root of the SD card.
+A list of disc images can be found in the "GameList.txt" file in the root of
+the SD card.
 
-Press Enter to exit.
+Press Enter to exit...
 
 ```
 
-After this process completes, the SD card structure changes yet again, this time to the unique format used by Rhea/Phoebe Sorter. The standard numbered folders are present, however metadata (i.e., disc number, release date, version, and region) is now explicitly stored directly within each game folder.
+After this process completes, the SD card structure changes yet again, this time to the unique format used by Rhea/Phoebe Sorter. The standard numbered folders are present, however metadata (e.g., disc number, region, virtual folder path) is now explicitly stored directly within each game folder.
 
 ```
 F:\
-├── 01
-│   ├── BIN
-│   │   ├── mkisofs.exe
-│   │   ├── mkisofs.txt
-│   │   ├── RMENU
-│   │   │   ├── 0.BIN
-│   │   │   ├── ABS.TXT
-│   │   │   ├── BIB.TXT
-│   │   │   ├── CPY.TXT
-│   │   │   ├── IP.BIN
-│   │   │   ├── LIST.INI
-│   │   │   └── Z.BIN
-│   │   └── titles.db
-│   ├── RMENU.exe
-│   └── RMENU.iso
-├── 02
-│   ├── Date.txt
-│   ├── Disc.txt
-│   ├── JungRhythmEnglishSegaSaturn.ccd
-│   ├── JungRhythmEnglishSegaSaturn.img
-│   ├── JungRhythmEnglishSegaSaturn.sub
-│   ├── Name.txt
-│   ├── Region.txt
-│   └── Version.txt
-├── 03
-│   ├── Date.txt
-│   ├── Disc.txt
-│   ├── Name.txt
-│   ├── POLICENAUTS_D1.ccd
-│   ├── POLICENAUTS_D1.img
-│   ├── POLICENAUTS_D1.sub
-│   ├── Region.txt
-│   └── Version.txt
-├── 04
-│   ├── Date.txt
-│   ├── Disc.txt
-│   ├── Name.txt
-│   ├── POLICENAUTS_D2.ccd
-│   ├── POLICENAUTS_D2.img
-│   ├── POLICENAUTS_D2.sub
-│   ├── Region.txt
-│   └── Version.txt
-├── 05
-│   ├── Date.txt
-│   ├── Disc.txt
-│   ├── Name.txt
-│   ├── POLICENAUTS_D3.ccd
-│   ├── POLICENAUTS_D3.img
-│   ├── POLICENAUTS_D3.sub
-│   ├── Region.txt
-│   └── Version.txt
-├── Game_List.txt
-└── Rhea.ini
+|   Rhea.ini
+|   GameList.txt
+|
++---02
+|       Bootleg Sampler (USA).ccd
+|       Bootleg Sampler (USA).img
+|       Bootleg Sampler (USA).sub
+|       Folder.txt
+|       Name.txt
+|       Disc.txt
+|       Region.txt
+|       Version.txt
+|       Date.txt
+|
++---01
+|   |   RMENU.exe
+|   |   RMENU.iso
+|   |
+|   \---BIN
+|       |   mkisofs.exe
+|       |
+|       \---RMENU
+|               0.BIN
+|               IP.BIN
+|               LIST.INI
+|               RMENU.0.BIN
+|               Z.BIN
+|
++---03
+|       game.ccd
+|       game.img
+|       game.sub
+|       Folder.txt
+|       Name.txt
+|       Disc.txt
+|       Region.txt
+|       Version.txt
+|       Date.txt
+|
++---04
+|       IMAGE.ccd
+|       IMAGE.img
+|       IMAGE.sub
+|       Folder.txt
+|       Name.txt
+|       Disc.txt
+|       Region.txt
+|       Version.txt
+|       Date.txt
+|
++---05
+|       DAYTONA USA C.C.E. NET LINK EDITION.ccd
+|       DAYTONA USA C.C.E. NET LINK EDITION.img
+|       DAYTONA USA C.C.E. NET LINK EDITION.sub
+|       Folder.txt
+|       Name.txt
+|       Disc.txt
+|       Region.txt
+|       Version.txt
+|       Date.txt
+|
++---06
+|       Advanced V.G. (Japan).ccd
+|       Advanced V.G. (Japan).img
+|       Advanced V.G. (Japan).sub
+|       Name.txt
+|       Disc.txt
+|       Region.txt
+|       Version.txt
+|       Date.txt
+|
++---07
+|       Grandia (English v1.1.1) (Disc 1).ccd
+|       Grandia (English v1.1.1) (Disc 1).img
+|       Grandia (English v1.1.1) (Disc 1).sub
+|       Name.txt
+|       Disc.txt
+|       Region.txt
+|       Version.txt
+|       Date.txt
+|
+\---08
+        Grandia (English v1.1.1) (Disc 2).ccd
+        Grandia (English v1.1.1) (Disc 2).img
+        Grandia (English v1.1.1) (Disc 2).sub
+        Name.txt
+        Disc.txt
+        Region.txt
+        Version.txt
+        Date.txt
+```
+
+Examining the contents of the `GameList.txt` file generated in the root of the SD card reveals the following, where disc images labels, along with their virtual folder paths, are easily identified.
+
+```
+01 - RMENU
+02 - /-Demo Discs-/Bootleg Sampler (Version 1)
+03 - /-Homebrew-/Blue Skies (PRGE 2022: Game Pad Version)
+04 - /-Media-/-CD+G-/Alphaville: The Breathtaking Blue
+05 - /-NetLink-/Daytona USA CCE
+06 - Advanced V.G. (JP)
+07 - Grandia (T-En) (Disc 1/2)
+08 - Grandia (T-En) (Disc 2/2)
+```
+
+Additionally, one can see the contents of `\01\BIN\RMENU\LIST.INI` to uncover precisely what metadata was used to generate a new RMENU/RmenuKai ISO.
+
+```
+01.title=RMENU
+01.disc=1/1
+01.region=JTUE
+01.version=V0.2.0
+01.date=20170228
+02.title=/-Demo Discs-/Bootleg Sampler (Version 1)
+02.disc=1/1
+02.region=UT
+02.date=19951026
+02.version=V1.006
+03.title=/-Homebrew-/Blue Skies (PRGE 2022: Game Pad Version)
+03.disc=1/1
+03.region=JTUE
+03.date=20150923
+03.version=V1.000
+04.title=/-Media-/-CD+G-/Alphaville: The Breathtaking Blue
+04.disc=1/1
+04.region=NA
+04.date=NA
+04.version=NA
+05.title=/-NetLink-/Daytona USA CCE
+05.disc=1/1
+05.region=JTUBKAEL
+05.date=19970522
+05.version=V1.000
+06.title=Advanced V.G. (JP)
+06.disc=1/1
+06.region=J
+06.date=19970113
+06.version=V1.001
+07.title=/Grandia (T-En)/Disc 1
+07.disc=1/2
+07.region=U
+07.date=19971108
+07.version=V1.002
+08.title=/Grandia (T-En)/Disc 2
+08.disc=2/2
+08.region=U
+08.date=19971117
+08.version=V1.004
 ```
 
 At this stage, the SD card is now ready for use. To add new games or remove existing games, simply follow the steps in the [Basic Usage](#basic-usage) section.
