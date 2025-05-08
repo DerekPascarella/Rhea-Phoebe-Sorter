@@ -102,7 +102,7 @@ Note that after adding a `ProductID.txt` file to a game folder and processing th
 
 ### Multi-Disc Games with RmenuKai
 
-If Rhea/Phoebe Sorter detects RmenuKai on the SD card, the user will be asked if they'd like to use virtual folders when processing multi-disc games. If the user says "yes", multi-disc games will only consume one entry on the RmenuKai game list. Upon selecting one of these multi-disc games, a subfolder will be displayed where each separate disc appears as a selectable entry.
+If Rhea/Phoebe Sorter detects RmenuKai on the SD card, the user will be asked if they'd like to use virtual subfolders when processing multi-disc games. If the user says "yes", multi-disc games will only consume one entry on the RmenuKai game list. Upon selecting one of these multi-disc games, a subfolder will be displayed where each separate disc appears as a selectable entry.
 
 For organizational purposes, it's highly recommended that those using RmenuKai allow Rhea/Phoebe Sorter to undergo this intelligent processing of multi-disc games.
 
