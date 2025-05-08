@@ -198,11 +198,15 @@ during migration process.
 Renaming numbered folders...
 
 -> Renamed folder "02" to "Bootleg Sampler (Version 1)"
+   Original virtual folder path preserved in "Folder.txt" file (-Demo Discs-)
 -> Renamed folder "03" to "Blue Skies (PRGE 2022 - Game Pad Version)"
-   Original RmenuKai title preserved in "Name.txt" file (Blue Skies (PRGE 2022: Game Pad Version))
+   Original title preserved in "Name.txt" file (Blue Skies (PRGE 2022: Game Pad Version))
+   Original virtual folder path preserved in "Folder.txt" file (-Homebrew-)
 -> Renamed folder "04" to "Alphaville - The Breathtaking Blue"
-   Original RmenuKai title preserved in "Name.txt" file (Alphaville: The Breathtaking Blue)
+   Original title preserved in "Name.txt" file (Alphaville: The Breathtaking Blue)
+   Original virtual folder path preserved in "Folder.txt" file (-Media-/-CD+G-)
 -> Renamed folder "05" to "Daytona USA CCE"
+   Original virtual folder path preserved in "Folder.txt" file (-NetLink-)
 -> Renamed folder "06" to "Advanced V.G. (JP)"
 -> Renamed folder "07" to "Grandia (T-En) - Disc 1"
 -> Renamed folder "08" to "Grandia (T-En) - Disc 2"
