@@ -11,7 +11,7 @@ With only this `01` folder present on a brand-new SD card, the card's structure 
 
 ```
 F:\
-|   Rhea.ini
+|   Rhea.ini (or Phoebe.ini)
 |
 \---01
     |   RMENU.exe
