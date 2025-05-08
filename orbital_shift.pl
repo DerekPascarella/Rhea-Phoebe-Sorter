@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Menu Migrator for Rhea/Phoebe Sorter v1.4
+# Menu Migrator for Rhea/Phoebe Sorter v1.5
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -11,7 +11,7 @@ use strict;
 use Encode;
 
 # Set version number.
-my $version = "1.4";
+my $version = "1.5";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -99,7 +99,7 @@ foreach my $line (read_file($sd_path_source . "\\01\\BIN\\RMENU\\LIST.INI"))
 	my $virtual_folder_path;
 
 	# Game title found (except "01" folder).
-	if($line =~ /^(\d{2})\.title=(.+)/ && $1 ne "01")
+	if($line =~ /^(\d{2,})\.title=(.+)/ && $1 ne "01")
 	{
 		# Capture the folder number and game title.
 		$folder_number = $1;
@@ -144,7 +144,7 @@ foreach my $line (read_file($sd_path_source . "\\01\\BIN\\RMENU\\LIST.INI"))
 	}
 
 	# Disc number found.
-	if($line =~ /^(\d{2})\.disc=(\d+)\/(\d+)/ && $1 ne "01")
+	if($line =~ /^(\d{2,})\.disc=(\d+)\/(\d+)/ && $1 ne "01")
 	{
 		# Capture disc number and total number of discs.
 		my $disc_number = $2;

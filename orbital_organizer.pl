@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Rhea/Phoebe Sorter v1.4
+# Rhea/Phoebe Sorter v1.5
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -13,7 +13,7 @@ use File::Copy;
 use Fcntl 'SEEK_SET';
 
 # Set version number.
-my $version = "1.4";
+my $version = "1.5";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
