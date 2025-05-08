@@ -11,19 +11,20 @@ With only this `01` folder present on a brand-new SD card, the card's structure 
 
 ```
 F:\
-└── 01
-    ├── BIN
-    │   ├── mkisofs.exe
-    │   ├── mkisofs.txt
-    │   └── RMENU
-    │       ├── 0.BIN
-    │       ├── ABS.TXT
-    │       ├── BIB.TXT
-    │       ├── CPY.TXT
-    │       ├── IP.BIN
-    │       └── Z.BIN
-    ├── Rhea.ini (or Phoebe.ini)
-    └── RMENU.exe
+|   Rhea.ini
+|
++---01
+|   |   RMENU.exe
+|   |   RMENU.iso
+|   |
+|   \---BIN
+|       |   mkisofs.exe
+|       |
+|       \---RMENU
+|               0.BIN
+|               IP.BIN
+|               LIST.INI
+|               Z.BIN
 ```
 
 ## Current Version
@@ -140,7 +141,6 @@ F:\
 |               0.BIN
 |               IP.BIN
 |               LIST.INI
-|               RMENU.0.BIN
 |               Z.BIN
 |
 +---03
@@ -234,7 +234,6 @@ F:\
 |               0.BIN
 |               IP.BIN
 |               LIST.INI
-|               RMENU.0.BIN
 |               Z.BIN
 |
 +---Advanced V.G. (JP)
@@ -331,17 +330,6 @@ F:\
 |   Rhea.ini
 |   GameList.txt
 |
-+---02
-|       Bootleg Sampler (USA).ccd
-|       Bootleg Sampler (USA).img
-|       Bootleg Sampler (USA).sub
-|       Folder.txt
-|       Name.txt
-|       Disc.txt
-|       Region.txt
-|       Version.txt
-|       Date.txt
-|
 +---01
 |   |   RMENU.exe
 |   |   RMENU.iso
@@ -353,8 +341,18 @@ F:\
 |               0.BIN
 |               IP.BIN
 |               LIST.INI
-|               RMENU.0.BIN
 |               Z.BIN
+|
++---02
+|       Bootleg Sampler (USA).ccd
+|       Bootleg Sampler (USA).img
+|       Bootleg Sampler (USA).sub
+|       Folder.txt
+|       Name.txt
+|       Disc.txt
+|       Region.txt
+|       Version.txt
+|       Date.txt
 |
 +---03
 |       game.ccd
