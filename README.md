@@ -28,9 +28,11 @@ F:\
 ```
 
 ## Current Version
-Rhea/Phoebe Sorter is currently at version [1.4](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.4/Rhea-Phobe.Sorter.v1.4.zip).
+Rhea/Phoebe Sorter is currently at version [1.5](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.5/Rhea-Phobe.Sorter.v1.5.zip).
 
 ## Changelog
+- **Version 1.5 (2025-05-08)**
+  * Fixed bug during migration process that ignored disc image folders after `99` (thanks [privateye](https://segaxtreme.net/members/privateye.20804/#about)).
 - **Version 1.4 (2025-05-07)**
   * Added support for modifying game Product IDs.
   * Added support for a secondary instance of legacy RMENU to live alongside, and be accessible from, RmenuKai.
@@ -178,7 +180,7 @@ To perform migration, drag the SD card onto `orbital_shift.exe`. It will produce
 
 ```
 
-Menu Migrator for Rhea/Phoebe Sorter v1.4
+Menu Migrator for Rhea/Phoebe Sorter v1.5
 "The Orbital Shift"
 Written by Derek Pascarella (ateam)
 
@@ -288,7 +290,7 @@ Next, drag the SD card onto `orbital_organizer.exe`, which will produce output s
 
 ```
 
-Rhea/Phoebe Sorter v1.4
+Rhea/Phoebe Sorter v1.5
 "The Orbital Organizer"
 Written by Derek Pascarella (ateam)
 
