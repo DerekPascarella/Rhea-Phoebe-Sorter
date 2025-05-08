@@ -76,7 +76,7 @@ Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc
   2. Converted disc image will be generated in a folder named `CCD`.
 - [Sega Saturn Patcher](https://segaxtreme.net/resources/sega-saturn-patcher.73/) ([link to latest version not yet available on SegaXtreme](https://drive.google.com/uc?export=download&id=1815dZRP0_N3TihjsHBepPuJN1hopiDLG))
   1. Launch application and then choose "Select Saturn Game".
-  2. Click "Rebuilt Image" at the bottom-right of the application.
+  2. Click "Rebuild Image" at the bottom-right of the application.
   3. Under the "Save as type" dropdown, select `CCD/IMG file (*.img)`.
   4. Navigate to desired output location and then click "Save" to generate converted disc image.
 - [batch_convert_cue_to_ccd.bat](https://raw.githubusercontent.com/DerekPascarella/Rhea-Phoebe-Sorter/refs/heads/main/batch_convert_cue_to_ccd.bat)
