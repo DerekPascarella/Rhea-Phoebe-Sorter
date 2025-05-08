@@ -131,11 +131,6 @@ Before undergoing this migration, consider the following example Rhea/Phoebe SD 
 F:\
 |   Rhea.ini
 |
-+---02
-|       Bootleg Sampler (USA).ccd
-|       Bootleg Sampler (USA).img
-|       Bootleg Sampler (USA).sub
-|
 +---01
 |   |   RMENU.exe
 |   |   RMENU.iso
@@ -148,6 +143,11 @@ F:\
 |               IP.BIN
 |               LIST.INI
 |               Z.BIN
+|
++---02
+|       Bootleg Sampler (USA).ccd
+|       Bootleg Sampler (USA).img
+|       Bootleg Sampler (USA).sub
 |
 +---03
 |       game.ccd
@@ -253,17 +253,12 @@ F:\
 |       Advanced V.G. (Japan).img
 |       Advanced V.G. (Japan).sub
 |
-+---Daytona USA CCE
-|       DAYTONA USA C.C.E. NET LINK EDITION.ccd
-|       DAYTONA USA C.C.E. NET LINK EDITION.img
-|       DAYTONA USA C.C.E. NET LINK EDITION.sub
++---Alphaville - The Breathtaking Blue
+|       IMAGE.ccd
+|       IMAGE.img
+|       IMAGE.sub
 |       Folder.txt
-|
-+---Bootleg Sampler (Version 1)
-|       Bootleg Sampler (USA).ccd
-|       Bootleg Sampler (USA).img
-|       Bootleg Sampler (USA).sub
-|       Folder.txt
+|       Name.txt
 |
 +---Blue Skies (PRGE 2022 - Game Pad Version)
 |       game.ccd
@@ -272,12 +267,17 @@ F:\
 |       Folder.txt
 |       Name.txt
 |
-+---Alphaville - The Breathtaking Blue
-|       IMAGE.ccd
-|       IMAGE.img
-|       IMAGE.sub
++---Bootleg Sampler (Version 1)
+|       Bootleg Sampler (USA).ccd
+|       Bootleg Sampler (USA).img
+|       Bootleg Sampler (USA).sub
 |       Folder.txt
-|       Name.txt
+|
++---Daytona USA CCE
+|       DAYTONA USA C.C.E. NET LINK EDITION.ccd
+|       DAYTONA USA C.C.E. NET LINK EDITION.img
+|       DAYTONA USA C.C.E. NET LINK EDITION.sub
+|       Folder.txt
 |
 +---Grandia (T-En) - Disc 1
 |       Grandia (English v1.1.1) (Disc 1).ccd
