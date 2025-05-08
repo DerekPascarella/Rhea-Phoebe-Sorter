@@ -48,6 +48,10 @@ Rhea/Phoebe Sorter is currently at version [1.5](https://github.com/DerekPascare
 - **Version 1.0 (2024-10-18)**
     - Initial release.
 
+## Known Issues
+
+As of the latest version of Rhea/Phoebe Sorter, there is no support for multiple game entries sharing the same label (even if their region or version number differs). This is not only true of building a brand-new SD card for the first time, but also true for those migrating from a pre-existing card. A future update will attempt to address this.
+
 ## Basic Usage
 
 ![#f03c15](https://i.imgur.com/XsUAGA0.png) **IMPORTANT:** *Rhea/Phoebe users with a pre-existing SD card must first undergo a migration process described in the [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rheaphoebe-sd-cards) section.*
