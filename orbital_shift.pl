@@ -86,12 +86,18 @@ if(-e $sd_path_source . "\\01\\BIN\\RMENU\\0.BIN" && find_bytes($sd_path_source 
 # Initialize hash used to store folder number and game name.
 my %game_list;
 
+# Initialize hash used to store preserved virtual folder paths (strictly for status messages).
+my %virtual_folders;
+
 # Variables to store the folder number and title temporarily
 my ($folder_number, $game_title);
 
 # Iterate through RMENU game list for parsing.
 foreach my $line (read_file($sd_path_source . "\\01\\BIN\\RMENU\\LIST.INI"))
 {
+	# Initialize RmenuKai virtual folder path variable.
+	my $virtual_folder_path;
+
 	# Game title found (except "01" folder).
 	if($line =~ /^(\d{2})\.title=(.+)/ && $1 ne "01")
 	{
@@ -122,7 +128,7 @@ foreach my $line (read_file($sd_path_source . "\\01\\BIN\\RMENU\\LIST.INI"))
 			if(scalar(@virtual_folder_parts) > 1)
 			{
 				# Construct full virtual folder path.
-				my $virtual_folder_path = join("/", @virtual_folder_parts[0 .. $#virtual_folder_parts - 1]);
+				$virtual_folder_path = join("/", @virtual_folder_parts[0 .. $#virtual_folder_parts - 1]);
 
 				# Trim leading/trailing forward slashes if somehow still present after processing.
 				$virtual_folder_path =~ s/^\///;
@@ -130,6 +136,9 @@ foreach my $line (read_file($sd_path_source . "\\01\\BIN\\RMENU\\LIST.INI"))
 
 				# Write virtual folder path to "Folder.txt" in respective numbered folder.
 				write_file($sd_path_source . "\\" . $folder_number . "\\Folder.txt", $virtual_folder_path);
+
+				# Add virtual folder path to hash key.
+				$virtual_folders{$folder_number} = $virtual_folder_path;
 			}
 		}
 	}
@@ -169,15 +178,14 @@ sleep(3);
 # Iterate through each key in game list hash, processing each folder rename.
 foreach my $folder_name (sort {lc $a cmp lc $b} keys %game_list)
 {
-	# Default flag to false.
-	my $rmenukai_folder_name_change = 0;
-	my $rmenukai_original_name;
+	# Status message.
+	print "-> Renamed folder \"" . $folder_name . "\" to \"" . $game_list{$folder_name} . "\"\n";
 
 	# Check for and clean-up illegal file name characters with RmenuKai migration.
 	if($rmenukai_detected && $game_list{$folder_name} =~ /[:<>\/\\\"|?*]/)
 	{
 		# Backup original game name from RmenuKai.
-		$rmenukai_original_name = $game_list{$folder_name};
+		my $rmenukai_original_name = $game_list{$folder_name};
 
 		# Perform clean up.
 		$game_list{$folder_name} =~ s/:/ -/g;
@@ -187,22 +195,17 @@ foreach my $folder_name (sort {lc $a cmp lc $b} keys %game_list)
 		$game_list{$folder_name} =~ s/"/'/g;
 		$game_list{$folder_name} =~ s/[|?*]//g;
 
-		# Set flag to true.
-		$rmenukai_folder_name_change = 1;
-	}
-
-	# Status message.
-	print "-> Renamed folder \"" . $folder_name . "\" to \"" . $game_list{$folder_name} . "\"\n";
-
-	# Display additional message and write "Name.txt" file if migration from RmenuKai caused
-	# encounter with illegal file name characters.
-	if($rmenukai_folder_name_change)
-	{
 		# Status message.
-		print "   Original RmenuKai title preserved in \"Name.txt\" file (" . $rmenukai_original_name . ")\n";
+		print "   Original title preserved in \"Name.txt\" file (" . $rmenukai_original_name . ")\n";
 
 		# Write original disc image title to "Name.txt" in respective folder.
 		write_file($sd_path_source . "\\" . $folder_name . "\\Name.txt", $rmenukai_original_name);
+	}
+
+	# Display additional message about virtual folder path preservation, if applicable.
+	if($virtual_folders{$folder_name})
+	{
+		print "   Original virtual folder path preserved in \"Folder.txt\" file (" . $virtual_folders{$folder_name} . ")\n";
 	}
 
 	# Rename folder.
