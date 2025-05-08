@@ -120,7 +120,7 @@ Whether using RmenuKai strictly via SD card, or using it via SD card coupled wit
 
 Note that this secondary instance of RMENU (in this case, legacy RMENU) will not reside in folder `01`. Instead, it will occupy a different folder number based on its place in the disc image list.
 
-It is suggested to leverage RmenuKai's virtual folder path support, keeping legacy RMENU in a folder named `Utilities and Applications` or similar. To achieve this, before processing the SD card create a file named `Folder.txt` inside of the legacy RMENU folder containing the desired virtual folder path.
+It is suggested to leverage RmenuKai's virtual folder path support to store legacy RMENU in a folder named `Utilities and Applications` or similar. To achieve this, before processing the SD card create a file named `Folder.txt` inside of the legacy RMENU folder containing the desired virtual folder path.
 
 ## Menu Migration for Pre-Existing Rhea/Phoebe SD Cards
 For those with a pre-existing SD card who wish to use Rhea/Phoebe Sorter moving forward, a one-time migration step must be taken. Note that this migration process fully honors virtual folder paths as defined in an RmenuKai-formatted SD card.
