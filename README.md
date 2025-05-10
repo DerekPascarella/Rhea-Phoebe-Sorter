@@ -47,16 +47,16 @@ Rhea/Phoebe Sorter is currently at version [1.6](https://github.com/DerekPascare
 
 ## Changelog
 - **Version 1.6 (2025-05-10)**
-  * Fixed bug that prevented header metadata extraction on disc images of `ISO` type.
+  * Fixed bug that prevented header metadata extraction on disc images of `ISO` type (thanks [privateye](https://segaxtreme.net/members/privateye.20804/#about) for testing).
   * Enhanced header metadata extraction methods for greater reliability and accuracy.
   * For both migration and adding new games, support was added for disc images with duplicate labels, except when said duplicates are multi-disc games residing in nested virtual folder paths (i.e., an edge-case that will never occur in the real world).
 - **Version 1.5 (2025-05-08)**
-  * Fixed bug during migration process that ignored disc image folders after `99` (thanks [privateye](https://segaxtreme.net/members/privateye.20804/#about)).
+  * Fixed bug during migration process that ignored disc image folders after `99` (thanks [privateye](https://segaxtreme.net/members/privateye.20804/#about) for testing).
 - **Version 1.4 (2025-05-07)**
   * Added support for modifying game Product IDs.
   * Added support for a secondary instance of legacy RMENU to live alongside, and be accessible from, RmenuKai.
   * Added RmenuKai virtual folder path support during migration process.
-  * Fixed issue preventing original game labels from being preserved during migration process if they contained characters that are restricted in file/folder names (thanks [privateye](https://segaxtreme.net/members/privateye.20804/#about)).
+  * Fixed issue preventing original game labels from being preserved during migration process if they contained characters that are restricted in file/folder names (thanks [privateye](https://segaxtreme.net/members/privateye.20804/#about) for testing).
   * Added warnings and confirmation prompts to ensure users do not accidentally have files or folders on their SD card open in File Explorer or any other program during processing, as this will result in data corruption.
 - **Version 1.3 (2025-05-03)**
   * Added support for automatic virtual subfolder processing of multi-disc games with RmenuKai.
