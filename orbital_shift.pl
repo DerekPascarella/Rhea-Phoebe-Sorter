@@ -1,17 +1,15 @@
 #!/usr/bin/perl
 #
-# Menu Migrator for Rhea/Phoebe Sorter v1.5
+# Menu Migrator for Rhea/Phoebe Sorter v1.6
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
 
 # Include necessary modules.
-use utf8;
 use strict;
-use Encode;
 
 # Set version number.
-my $version = "1.5";
+my $version = "1.6";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -155,11 +153,16 @@ foreach my $line (read_file($sd_path_source . "\\01\\BIN\\RMENU\\LIST.INI"))
 		{
 			$game_list{$folder_number} = $game_title . " - Disc " . $disc_number;
 		}
+		# Otherwise, just store the game title.
 		else
 		{
-			# Otherwise, just store the game title.
 			$game_list{$folder_number} = $game_title;
 		}
+	}
+	# Non-standard disc number descriptor found, just store the game title.
+	elsif($line =~ /^(\d{2,})\.disc=([^\/]+)/ && $1 ne "01" && $line !~ /^(\d{2,})\.disc=\d+\/\d+/)
+	{
+		$game_list{$folder_number} = $game_title;
 	}
 }
 
@@ -178,14 +181,13 @@ sleep(3);
 # Iterate through each key in game list hash, processing each folder rename.
 foreach my $folder_name (sort {lc $a cmp lc $b} keys %game_list)
 {
-	# Status message.
-	print "-> Renamed folder \"" . $folder_name . "\" to \"" . $game_list{$folder_name} . "\"\n";
+	# Check for and clean-up illegal file name characters.
+	my $original_name;
 
-	# Check for and clean-up illegal file name characters with RmenuKai migration.
-	if($rmenukai_detected && $game_list{$folder_name} =~ /[:<>\/\\\"|?*]/)
+	if($game_list{$folder_name} =~ /[:<>\/\\\"|?*]/)
 	{
 		# Backup original game name from RmenuKai.
-		my $rmenukai_original_name = $game_list{$folder_name};
+		$original_name = $game_list{$folder_name};
 
 		# Perform clean up.
 		$game_list{$folder_name} =~ s/:/ -/g;
@@ -195,15 +197,45 @@ foreach my $folder_name (sort {lc $a cmp lc $b} keys %game_list)
 		$game_list{$folder_name} =~ s/"/'/g;
 		$game_list{$folder_name} =~ s/[|?*]//g;
 
-		# Status message.
-		print "   Original title preserved in \"Name.txt\" file (" . $rmenukai_original_name . ")\n";
-
 		# Write original disc image title to "Name.txt" in respective folder.
-		write_file($sd_path_source . "\\" . $folder_name . "\\Name.txt", $rmenukai_original_name);
+		write_file($sd_path_source . "\\" . $folder_name . "\\Name.txt", $original_name);
+	}
+
+	# If folder already exists with the same name, preserve the original name by processing it
+	# specially.
+	my @random_character_bank = ("A" .. "Z", "0" .. "9");
+	my $random_id;
+
+	if(-e $sd_path_source . "\\" . $game_list{$folder_name})
+	{
+		# If not done already, write original disc image title to "Name.txt" in respective folder.
+		if($original_name eq "")
+		{
+			write_file($sd_path_source . "\\" . $folder_name . "\\Name.txt", $game_list{$folder_name});
+		}
+
+		# Generate random six-character ID for duplicate entries.
+		$random_id = join("", map { $random_character_bank[int(rand(@random_character_bank))] } 1 .. 6);
+
+		# Append random six-character ID to the end of the game name.
+		$game_list{$folder_name} = $game_list{$folder_name} . " [UNIQUE-" . $random_id . "]";
+	}
+
+	# Status message.
+	print "-> Renamed folder \"" . $folder_name . "\" to \"" . $game_list{$folder_name} . "\"\n";
+
+	if($original_name ne "")
+	{
+		print "   Original title preserved in \"Name.txt\" file (" . $original_name . ")\n";
+	}
+
+	if($random_id ne "")
+	{
+		print "   Unique ID appended to folder name to avoid duplicate\n";
 	}
 
 	# Display additional message about virtual folder path preservation, if applicable.
-	if($virtual_folders{$folder_name})
+	if(exists $virtual_folders{$folder_name})
 	{
 		print "   Original virtual folder path preserved in \"Folder.txt\" file (" . $virtual_folders{$folder_name} . ")\n";
 	}
