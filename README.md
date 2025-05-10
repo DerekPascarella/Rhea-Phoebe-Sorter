@@ -43,9 +43,13 @@ F:\
 - [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rheaphoebe-sd-cards)
 
 ## Current Version
-Rhea/Phoebe Sorter is currently at version [1.5](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.5/Rhea-Phobe.Sorter.v1.5.zip).
+Rhea/Phoebe Sorter is currently at version [1.6](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.6/Rhea-Phobe.Sorter.v1.6.zip).
 
 ## Changelog
+- **Version 1.6 (2025-05-10)**
+  * Fixed bug that prevented header metadata extraction on disc images of ISO type.
+  * Enhanced header metadata extraction methods for greater reliability and accuracy.
+  * For both migration and adding new games, support was added for disc images with duplicate labels, except when said duplicates are multi-disc games residing in nested virtual folder paths (i.e., an edge-case that will never occur in the real world).
 - **Version 1.5 (2025-05-08)**
   * Fixed bug during migration process that ignored disc image folders after `99` (thanks [privateye](https://segaxtreme.net/members/privateye.20804/#about)).
 - **Version 1.4 (2025-05-07)**
@@ -65,7 +69,7 @@ Rhea/Phoebe Sorter is currently at version [1.5](https://github.com/DerekPascare
 
 ## Known Issues
 
-As of the latest version of Rhea/Phoebe Sorter, there is no support for multiple game entries sharing the same label (even if their region or version number differs). This is not only true of building a brand-new SD card for the first time, but also true for those migrating from a pre-existing card. A future update will attempt to address this.
+As of the latest version of Rhea/Phoebe Sorter, multiple game entries sharing the same labels are not supported if they are multi-disc games that are nested into one or more virtual subfolders (e.g., `/Games/RPGs/Grandia (T-En)/Disc 1`). However, multiple game entries sharing the same labels are supported for single-disc games that are nested into one or more virtual subfolders (e.g., `/Games/Shooters/Radiant Silvergun`).
 
 ## Converting Disc Images to CloneCD Format
 
