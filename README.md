@@ -47,7 +47,7 @@ Rhea/Phoebe Sorter is currently at version [1.6](https://github.com/DerekPascare
 
 ## Changelog
 - **Version 1.6 (2025-05-10)**
-  * Fixed bug that prevented header metadata extraction on disc images of ISO type.
+  * Fixed bug that prevented header metadata extraction on disc images of `ISO` type.
   * Enhanced header metadata extraction methods for greater reliability and accuracy.
   * For both migration and adding new games, support was added for disc images with duplicate labels, except when said duplicates are multi-disc games residing in nested virtual folder paths (i.e., an edge-case that will never occur in the real world).
 - **Version 1.5 (2025-05-08)**
