@@ -97,7 +97,8 @@ Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc
 
 ![#f03c15](https://i.imgur.com/XsUAGA0.png) **IMPORTANT:** *Rhea/Phoebe users with a pre-existing SD card must first undergo a migration process described in the [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rheaphoebe-sd-cards) section.*
 
-Using Rhea/Phoebe Sorter is simple, with each operation to be carried out according to the instructions below.
+Using Rhea/Phoebe Sorter is simple, where each operation is carried out according to the instructions below.
+
 ### Adding New Games
 
 1. Create a folder on the root of the SD card, giving it whatever name should appear in the RMENU/RmenuKai game list.
