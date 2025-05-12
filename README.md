@@ -43,9 +43,11 @@ F:\
 - [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rheaphoebe-sd-cards)
 
 ## Current Version
-Rhea/Phoebe Sorter is currently at version [1.6](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.6/Rhea-Phobe.Sorter.v1.6.zip).
+Rhea/Phoebe Sorter is currently at version [1.7](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.7/Rhea-Phobe.Sorter.v1.7.zip).
 
 ## Changelog
+- **Version 1.7 (2025-05-12)**
+  * If files/folders are locked by another process when Rhea/Phebe Sorter attempts to move/rename them, a prompt will now be displayed giving the user the opportunity to close said processes before proceeding, instead of those locked files/folders being skipped.
 - **Version 1.6 (2025-05-10)**
   * Fixed bug that prevented header metadata extraction on disc images of `ISO` type (thanks to [privateye](https://segaxtreme.net/members/privateye.20804/#about) for testing).
   * Enhanced header metadata extraction methods for greater reliability and accuracy.
