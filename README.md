@@ -102,7 +102,7 @@ Using Rhea/Phoebe Sorter is simple, where each operation is carried out accordin
 ### Adding New Games
 
 1. Create a folder on the root of the SD card, giving it whatever name should appear in the RMENU/RmenuKai game list.
-   - Should a label be desired that contains characters that are restricted in file/folder names (i.e., `<`, `>`, `:`, `"`, `/`, `\`, `|`, `?`, and `*`), create a file named `Name.txt` inside of the game disc folder containing said label.
+   - Should a label be desired that contains characters that are restricted in file/folder names (i.e., `<`, `>`, `:`, `"`, `/`, `\`, `|`, `?`, and `*`), create a file named `Name.txt` inside of the game disc folder containing said label. In this case, the name of the folder itself is ignored and not important.
    - For multi-disc games, append ` - Disc X` to the end of the folder name (or to the end of the label stored in `Name.txt`). This format must be adhered to for proper processing of multi-disc games. See examples below.
      - `Policenauts (T-En) - Disc 1`
      - `Enemy Zero - Disc 2`
@@ -117,7 +117,7 @@ Using Rhea/Phoebe Sorter is simple, where each operation is carried out accordin
 2. Remove the identified numbered folder from the SD card.
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
-### Changing Game Label, Virtual Folder Paths, and Other Metadata
+### Changing Game Labels, Virtual Folder Paths, and Other Metadata
 
 1. Open `GameList.txt` in the root of the SD card and then identify the numbered folder containing the disc image with metadata to be edited.
 2. Open the identified numbered folder, then open and make changes to the appropriate text file.
