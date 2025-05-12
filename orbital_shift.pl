@@ -1,15 +1,17 @@
 #!/usr/bin/perl
 #
-# Menu Migrator for Rhea/Phoebe Sorter v1.6
+# Menu Migrator for Rhea/Phoebe Sorter v1.7
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
 
 # Include necessary modules.
 use strict;
+use Win32 ();
+use Errno ("EACCES", "EBUSY");
 
 # Set version number.
-my $version = "1.6";
+my $version = "1.7";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -241,7 +243,7 @@ foreach my $folder_name (sort {lc $a cmp lc $b} keys %game_list)
 	}
 
 	# Rename folder.
-	rename($sd_path_source . "\\" . $folder_name, $sd_path_source . "\\" . $game_list{$folder_name});
+	rename_until_free($sd_path_source . "\\" . $folder_name, $sd_path_source . "\\" . $game_list{$folder_name});
 }
 
 # Status message.
@@ -311,4 +313,35 @@ sub find_bytes
 	close $fh;
 
 	return 0;
+}
+
+# Subroutine to attempt file move/rename with prompt to close any processes preventing access to
+# it.
+#
+# 1st parameter - Full path of source file/folder.
+# 2nd parameter - Full path to destination file/folder.
+sub rename_until_free
+{
+	my $source = ($_[0] =~ s/\\{2,}/\\/gr);
+	my $destination = $_[1];
+
+	while(1)
+	{
+		return 1 if(rename $source, $destination);
+
+		my $code = Win32::GetLastError();
+
+		if($code == 32 || $code == 5 || $!{EACCES} || $!{EBUSY})
+		{
+			print "\nThe following folder is open in one or more other programs:\n";
+			print "   -> " . $source . "\n";
+			print "Please terminate any processes preventing access and then press Enter.";
+
+			<STDIN>;
+
+			next;
+		}
+
+		die "Fatal error trying to move \"$source\" to \"$destination\":\n$!\n";
+	}
 }

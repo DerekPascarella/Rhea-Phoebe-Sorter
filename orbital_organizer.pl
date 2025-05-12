@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Rhea/Phoebe Sorter v1.6
+# Rhea/Phoebe Sorter v1.7
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -10,10 +10,12 @@ use utf8;
 use strict;
 use Encode;
 use File::Copy;
-use Fcntl 'SEEK_SET';
+use Win32 ();
+use Fcntl ("SEEK_SET");
+use Errno ("EACCES", "EBUSY");
 
 # Set version number.
-my $version = "1.6";
+my $version = "1.7";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -149,7 +151,8 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b } readdir($sd_path_source_
 	{
 		$invalid_count ++;
 
-		rename($sd_path_source . "\\" . $sd_subfolder, $sd_path_source . "\\INVALID_" . $invalid_count);
+		rename_until_free($sd_path_source . "\\" . $sd_subfolder,
+		                  $sd_path_source . "\\INVALID_" . $invalid_count);
 	}
 
 	# If folder contains no game disc image, skip it.
@@ -513,25 +516,9 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b } readdir($sd_path_source_
 	# Increase detected game count by one.
 	$game_count_found ++;
 
-	# For purposes of FAT sorting, create temporary folder for game.
-	mkdir($sd_path_source . "\\orbital_organizer_temp\\" . $sd_subfolder);
-	
-	# Open game folder for reading.
-	opendir(my $game_folder_handler, $sd_path_source . "\\" . $sd_subfolder);
-
-	# Iterate through contents of game folder.
-	foreach my $game_folder_file (readdir($game_folder_handler))
-	{
-		# Move each file into temporary folder.
-		rename($sd_path_source . "\\" . $sd_subfolder . "\\" . $game_folder_file,
-			   $sd_path_source . "\\orbital_organizer_temp\\" . $sd_subfolder . "\\" . $game_folder_file);
-	}
-
-	# Close game folder.
-	closedir($game_folder_handler);
-
-	# Remove original game folder.
-	rmdir($sd_path_source . "\\" . $sd_subfolder);
+	# Move game folder to temporary folder.
+	rename_until_free($sd_path_source . "\\" . $sd_subfolder,
+		              $sd_path_source . "\\orbital_organizer_temp\\" . $sd_subfolder);
 }
 
 # Close SD card path.
@@ -600,19 +587,9 @@ foreach my $game_name (
 	# Add folder name entry to metadata hash for current game, used later to rebuild RMENU.
 	$metadata{$game_name}->{'Folder'} = $sd_subfolder_new;
 
-	# Create game folder based on new sorted name.
-	mkdir($sd_path_source . "\\" . $sd_subfolder_new);
-	
-	# Open temporary game folder for reading.
-	opendir(my $game_folder_handler, $sd_path_source . "\\orbital_organizer_temp\\" . $game_list{$game_name});
-
-	# Iterate through contents of temporary game folder.
-	foreach my $game_folder_file (readdir($game_folder_handler))
-	{
-		# Move each file back from temporay game folder.
-		rename($sd_path_source . "\\orbital_organizer_temp\\" . $game_list{$game_name} . "\\" . $game_folder_file,
-			   $sd_path_source . "\\" . $sd_subfolder_new . "\\" . $game_folder_file);
-	}
+	# Move game folder from temporary folder back to root with new numbered name.
+	rename_until_free($sd_path_source . "\\orbital_organizer_temp\\" . $game_list{$game_name},
+		              $sd_path_source . "\\" . $sd_subfolder_new);
 
 	# Check for custom Product ID metadata file.
 	if(-e $sd_path_source . "\\" . $sd_subfolder_new . "\\ProductID.txt")
@@ -665,12 +642,6 @@ foreach my $game_name (
 			print "(product ID patched: " . $product_id . ")\n";
 		}
 	}
-
-	# Close game folder.
-	closedir($game_folder_handler);
-
-	# Remove temporary game folder.
-	rmdir($sd_path_source . "\\orbital_organizer_temp\\" . $game_list{$game_name});
 }
 
 # Remove temporary folder.
@@ -1028,4 +999,35 @@ sub folder_list
 	closedir($folder_handle);
 
 	return map { "$folder\\$_" } @files;
+}
+
+# Subroutine to attempt file move/rename with prompt to close any processes preventing access to
+# it.
+#
+# 1st parameter - Full path of source file/folder.
+# 2nd parameter - Full path to destination file/folder.
+sub rename_until_free
+{
+	my $source = ($_[0] =~ s/\\{2,}/\\/gr);
+	my $destination = $_[1];
+
+	while(1)
+	{
+		return 1 if(rename $source, $destination);
+
+		my $code = Win32::GetLastError();
+
+		if($code == 32 || $code == 5 || $!{EACCES} || $!{EBUSY})
+		{
+			print "The following file/folder is open in one or more other programs:\n";
+			print "   -> " . $source . "\n";
+			print "Please terminate any processes preventing access and then press Enter.\n";
+
+			<STDIN>;
+
+			next;
+		}
+
+		die "Fatal error trying to move \"$source\" to \"$destination\":\n$!\n";
+	}
 }
