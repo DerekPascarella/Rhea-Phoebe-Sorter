@@ -333,6 +333,16 @@ F:\
         Grandia (English v1.1.1) (Disc 2).sub
 ```
 
+It's important to note that at this point, users will want to correct folder names (or `Name.txt` files inside of them) where disc numbers are redundant. This occurs if one's original Rhea/Phoebe SD card included disc numbers in the game labels, even though RMENU automatically displays disc numbers, thus negating the need for them to be present in the game labels themselves.
+
+For example, one might see folders (or `Name.txt` files inside of them) like this:
+* `SAKURA WARS EN DISC1 - Disc 1`
+* `POLICENAUTS EN DISC3 - Disc 3`
+
+In such cases, the auto-tagged disc numbers at the end should be preserved, while the extraneous disc number labels should be removed. So, the above would be renamed as follows.
+* `SAKURA WARS EN - Disc 1`
+* `POLICENAUTS EN - Disc 3`
+
 Next, drag the SD card onto `orbital_organizer.exe`, which will produce output similar to the below.
 
 ```
