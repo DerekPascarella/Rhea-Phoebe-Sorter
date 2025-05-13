@@ -27,6 +27,7 @@ if(!-d $sd_path_source || !-e $sd_path_source || $sd_path_source eq "")
 	print "Error: No SD card path specified.\n\n";
 	print "Example Usage: orbital_shift H:\\\n\n";
 	print "Press Enter to exit...\n";
+
 	<STDIN>;
 
 	exit;
@@ -39,6 +40,7 @@ elsif(!-R $sd_path_source)
 	print "Error: Specified SD card path is unreadable.\n\n";
 	print "Example Usage: orbital_shift H:\\\n\n";
 	print "Press Enter to exit...\n";
+
 	<STDIN>;
 
 	exit;
@@ -51,6 +53,7 @@ elsif(!-e $sd_path_source . "/01/BIN/RMENU/LIST.INI")
 	print "Error: No pre-existing RMENU list found on SD card.\n\n";
 	print "Example Usage: orbital_shift H:\\\n\n";
 	print "Press Enter to exit...\n";
+
 	<STDIN>;
 
 	exit;
@@ -66,6 +69,7 @@ print "WARNING: Before proceeding, ensure that no files or folders on SD card ("
 print "         are open in File Explorer or any other program. Failure to do so\n";
 print "         will result in data corruption!\n\n";
 print "Press Enter to continue...\n";
+
 <STDIN>;
 
 # Status message.
@@ -252,6 +256,7 @@ print "Next, drag SD card onto \"orbital_organizer.exe\" to rebuild RMENU.\n\n";
 
 # Final status message.
 print "Press Enter to exit...\n";
+
 <STDIN>;
 
 # A subroutine to read a text file into an array.

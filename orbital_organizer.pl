@@ -38,6 +38,7 @@ if(!-d $sd_path_source || !-e $sd_path_source || $sd_path_source eq "")
 	print "Error: No SD card path specified.\n\n";
 	print "Example Usage: orbital_organizer H:\\\n\n";
 	print "Press Enter to exit...\n";
+
 	<STDIN>;
 
 	exit;
@@ -50,6 +51,7 @@ elsif(!-R $sd_path_source)
 	print "Error: Specified SD card path is unreadable.\n\n";
 	print "Example Usage: orbital_organizer H:\\\n\n";
 	print "Press Enter to exit...\n";
+
 	<STDIN>;
 
 	exit;
@@ -65,6 +67,7 @@ print "WARNING: Before proceeding, ensure that no files or folders on SD card ("
 print "         are open in File Explorer or any other program. Failure to do so\n";
 print "         will result in data corruption!\n\n";
 print "Press Enter to continue...\n";
+
 <STDIN>;
 
 # If RmenuKai is detected, prompt for virtual folder processing of multi-disc games.
@@ -529,6 +532,7 @@ if(!$game_count_found)
 {
 	print "No disc image(s) detected on SD card.\n\n";
 	print "Press Enter to exit...\n";
+
 	<STDIN>;
 
 	exit;
@@ -743,7 +747,7 @@ if(-e $sd_path_source . "\\01\\BIN\\mkisofs.exe")
 	print "RMENU rebuild complete!\n\n";
 
 	# RmenuKai was detected, but an additional RMENU entry was found on the SD card, so treat it
-	# like an instance of legacy
+	# like an instance of legacy RMENU to live alongside RmenuKai.
 	if($rmenukai_detected == 1 && grep { /rmenu/i && $metadata{$_}{'Folder'} ne '01' } keys %metadata)
 	{
 		# Status message.
@@ -814,6 +818,7 @@ else
 
 # Final status message.
 print "Press Enter to exit...\n";
+
 <STDIN>;
 
 # Subroutine to read a specified file.
