@@ -36,7 +36,7 @@ F:\
   - [Convert Individual Disc Images With CUE2CCD](#convert-individual-disc-images-with-cue2ccd)
   - [Batch Convert Multiple Disc Images with CUE2CCD Script](#batch-convert-multiple-disc-images-with-cue2ccd-script)
   - [Sega Saturn Patcher](#sega-saturn-patcher)
-  - [Manual Dumping with DAEMON Tools + CloneCD](#manual-dumping-with-daemon-tools--clonecd)
+  - [Manual Dumping with DAEMON Tools and CloneCD/DiscJuggler](#manual-dumping-with-daemon-tools-and-clonecd--discjuggler)
     - [Troubleshooting](#troubleshooting)
 - [Basic Usage](#basic-usage)
   - [Adding New Games](#adding-new-games)
@@ -101,7 +101,7 @@ Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc
 3. Under the "Save as type" dropdown, select `CCD/IMG file (*.img)`.
 4. Navigate to desired output location and then click "Save" to generate converted disc image.
 
-### Manual Dumping with DAEMON Tools + CloneCD
+### Manual Dumping with DAEMON Tools and CloneCD/DiscJuggler
 1. Ensure your disc image uses a `CUE` file for its table of contents.
 2. Mount the `CUE` file with [DAEMON Tools](https://www.daemon-tools.cc).
 3. Use [CloneCD](https://clonecd.en.softonic.com/) to dump the mounted image to `CCD/IMG/SUB` format.
