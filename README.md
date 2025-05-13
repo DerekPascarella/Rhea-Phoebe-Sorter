@@ -36,7 +36,7 @@ F:\
   - [Convert Individual Disc Images With CUE2CCD](#convert-individual-disc-images-with-cue2ccd)
   - [Batch Convert Multiple Disc Images with CUE2CCD Script](#batch-convert-multiple-disc-images-with-cue2ccd-script)
   - [Sega Saturn Patcher](#sega-saturn-patcher)
-  - [Manual Dumping with DAEMON Tools and CloneCD/DiscJuggler](#manual-dumping-with-daemon-tools-and-clonecd--discjuggler)
+  - [Manual Dumping with DAEMON Tools and CloneCD/DiscJuggler](#manual-dumping-with-daemon-tools-and-clonecddiscjuggler)
     - [Troubleshooting](#troubleshooting)
 - [Basic Usage](#basic-usage)
   - [Adding New Games](#adding-new-games)
