@@ -90,7 +90,7 @@ Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc
 2. Converted disc image will be generated in a folder named `CCD`.
 
 ### Batch Convert Multiple Disc Images with CUE2CCD Script
-1. Ensure that [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/) is downloaded and in the same folder as `batch_convert_cue_to_ccd.bat`.
+1. Ensure that [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/) is downloaded and in the same folder as [batch_convert_cue_to_ccd.bat](https://raw.githubusercontent.com/DerekPascarella/Rhea-Phoebe-Sorter/refs/heads/main/batch_convert_cue_to_ccd.bat).
 2. Drag a folder containing disc images to be converted directly onto the batch script. Note that any degree of nested subfolders is supported.
 3. Console output will appear with status update messages, and `success.log` and `error.log` files will be written to record conversion history.
 4. Original disc images inside the folder dragged onto the batch script will be deleted and replaced with converted ones in `CCD/IMG/SUB` format.
