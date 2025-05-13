@@ -83,15 +83,15 @@ Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc
 - [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/)
   1. Drag `.CUE` file onto `cue2ccd.exe` to perform conversion of a single disc image.
   2. Converted disc image will be generated in a folder named `CCD`.
+- [batch_convert_cue_to_ccd.bat](https://raw.githubusercontent.com/DerekPascarella/Rhea-Phoebe-Sorter/refs/heads/main/batch_convert_cue_to_ccd.bat)
+  1. Ensure that [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/) is downloaded and in the same folder as `batch_convert_cue_to_ccd.bat`.
+  2. Drag a folder containing disc images to be converted directly onto the batch script. Note that any degree of nested subfolders is supported.
+  3. Console output will appear with status update messages, and original disc images will be deleted and replaced with converted ones.
 - [Sega Saturn Patcher](https://segaxtreme.net/resources/sega-saturn-patcher.73/) ([link to latest version not yet available on SegaXtreme](https://drive.google.com/uc?export=download&id=1815dZRP0_N3TihjsHBepPuJN1hopiDLG))
   1. Launch application and then choose "Select Saturn Game".
   2. Click "Rebuild Image" at the bottom-right of the application.
   3. Under the "Save as type" dropdown, select `CCD/IMG file (*.img)`.
   4. Navigate to desired output location and then click "Save" to generate converted disc image.
-- [batch_convert_cue_to_ccd.bat](https://raw.githubusercontent.com/DerekPascarella/Rhea-Phoebe-Sorter/refs/heads/main/batch_convert_cue_to_ccd.bat)
-  1. Ensure that [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/) is downloaded and in the same folder as `batch_convert_cue_to_ccd.bat`.
-  2. Drag a folder containing disc images to be converted directly onto the batch script. Note that any degree of nested subfolders is supported.
-  3. Console output will appear with status update messages, and original disc images will be deleted and replaced with converted ones.
 - Disc images using a `.CUE` file for their table of contents can be mounted with applications like [DAEMON Tools](https://www.daemon-tools.cc) and then dumped to `CCD/IMG/SUB` with [CloneCD](https://clonecd.en.softonic.com/). Note that newer versions of Windows are known to cause issues with this method in some cases. If none of the conversion methods listed here are yielding a successfully booting `CCD/IMG/SUB` disc image and DAEMON Tools combined with CloneCD on a modern version of Windows is also failing to produce a working disc image, provision a Windows XP virtual machine. Then, use DAEMON Tools v3.47 to mount the source disc image. Lastly, dump the disc image mounted in the virtual CD-ROM drive to `CCD/IMG/SUB` using CloneCD, or to `CDI` using DiscJuggler v6.00.1400 ([link 1](https://www.afterdawn.com/software/cd_dvd/burning/padus_disc_juggler.cfm), [link 2](https://archive.org/details/disc-juggler-pro-v-6.00.1400)). Rhea/Phoebe supports both `CCD/IMG/SUB` and `CDI` formats.
 
 ## Basic Usage
