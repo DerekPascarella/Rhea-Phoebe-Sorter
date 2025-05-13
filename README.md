@@ -102,9 +102,8 @@ Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc
 4. Navigate to desired output location and then click "Save" to generate converted disc image.
 
 ### Manual Dumping with DAEMON Tools and CloneCD/DiscJuggler
-1. Ensure your disc image uses a `CUE` file for its table of contents.
-2. Mount the `CUE` file with [DAEMON Tools](https://www.daemon-tools.cc).
-3. Use [CloneCD](https://clonecd.en.softonic.com/) to dump the mounted image to `CCD/IMG/SUB` format.
+1. Mount the source disc image's `CUE` sheet with [DAEMON Tools](https://www.daemon-tools.cc).
+2. Use [CloneCD](https://clonecd.en.softonic.com/) to dump the contents of the virtual CD-ROM drive hosting the mounted image to `CCD/IMG/SUB` format.
 
 #### Troubleshooting
 Newer versions of Windows may cause issues with the DAEMON Tools + CloneCD method. If conversion with all options listed above, the following process can be followed to produce a successfully booting `CCD/IMG/SUB` (or `CDI`) disc image.
