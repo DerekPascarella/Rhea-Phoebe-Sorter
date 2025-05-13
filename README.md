@@ -31,6 +31,7 @@ F:\
 
 - [Current Version](#current-version)
 - [Changelog](#changelog)
+- [Supported Operating Systems](#supported-operating-systems)
 - [Known Issues](#known-issues)
 - [Converting Disc Images to CloneCD Format](#converting-disc-images-to-clonecd-format)
   - [Convert Individual Disc Images With CUE2CCD](#convert-individual-disc-images-with-cue2ccd)
@@ -74,6 +75,10 @@ Rhea/Phoebe Sorter is currently at version [1.7](https://github.com/DerekPascare
   * Cleaned up status message output to be more compact and descriptive.
 - **Version 1.0 (2024-10-18)**
     - Initial release.
+
+## Supported Operating Systems
+
+While Rhea/Phoebe Sorter is written in the cross-platform [Perl](https://www.perl.org) programming language, it is currently only compatible with Windows. This limitation is due to a few components that still rely on parts of the legacy RMENU rebuild process, which was also Windows-specific. Future updates aim to make the tool fully cross-platform and OS-agnostic.
 
 ## Known Issues
 
