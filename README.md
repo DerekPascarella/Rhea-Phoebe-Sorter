@@ -33,10 +33,15 @@ F:\
 - [Changelog](#changelog)
 - [Known Issues](#known-issues)
 - [Converting Disc Images to CloneCD Format](#converting-disc-images-to-clonecd-format)
+  - [Convert Individual Disc Images With CUE2CCD](#convert-individual-disc-images-with-cue2ccd)
+  - [Batch Convert Multiple Disc Images with CUE2CCD Script](#batch-convert-multiple-disc-images-with-cue2ccd-script)
+  - [Sega Saturn Patcher](#sega-saturn-patcher)
+  - [Manual Dumping with DAEMON Tools + CloneCD](#manual-dumping-with-daemon-tools--clonecd)
+    - [Troubleshooting](#troubleshooting)
 - [Basic Usage](#basic-usage)
   - [Adding New Games](#adding-new-games)
   - [Removing Existing Games](#removing-existing-games)
-  - [Changing Game Label, Virtual Folder Paths, and Other Metadata](#changing-game-label-virtual-folder-paths-and-other-metadata)
+  - [Changing Game Labels, Virtual Folder Paths, and Other Metadata](#changing-game-labels-virtual-folder-paths-and-other-metadata)
   - [Modifying Product ID](#modifying-product-id)
   - [Multi-Disc Games with RmenuKai](#multi-disc-games-with-rmenukai)
   - [Adding an Instance of Legacy RMENU Alongside RmenuKai](#adding-an-instance-of-legacy-rmenu-alongside-rmenukai)
@@ -80,19 +85,32 @@ Additionally, multiple game entries cannot point to the same disc image in the l
 
 Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc images to CloneCD format (i.e., `CCD/IMG/SUB`). There are several options, including batch conversion. In general, the below methods support conversion from any valid disc image that uses a `.CUE` file for its table of contents (e.g., `CUE/BIN`, `CUE/ISO`, `CUE/ISO/WAV`).
 
-- [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/)
-  1. Drag `.CUE` file onto `cue2ccd.exe` to perform conversion of a single disc image.
-  2. Converted disc image will be generated in a folder named `CCD`.
-- [batch_convert_cue_to_ccd.bat](https://raw.githubusercontent.com/DerekPascarella/Rhea-Phoebe-Sorter/refs/heads/main/batch_convert_cue_to_ccd.bat)
-  1. Ensure that [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/) is downloaded and in the same folder as `batch_convert_cue_to_ccd.bat`.
-  2. Drag a folder containing disc images to be converted directly onto the batch script. Note that any degree of nested subfolders is supported.
-  3. Console output will appear with status update messages, and original disc images will be deleted and replaced with converted ones.
-- [Sega Saturn Patcher](https://segaxtreme.net/resources/sega-saturn-patcher.73/) ([link to latest version not yet available on SegaXtreme](https://drive.google.com/uc?export=download&id=1815dZRP0_N3TihjsHBepPuJN1hopiDLG))
-  1. Launch application and then choose "Select Saturn Game".
-  2. Click "Rebuild Image" at the bottom-right of the application.
-  3. Under the "Save as type" dropdown, select `CCD/IMG file (*.img)`.
-  4. Navigate to desired output location and then click "Save" to generate converted disc image.
-- Disc images using a `.CUE` file for their table of contents can be mounted with applications like [DAEMON Tools](https://www.daemon-tools.cc) and then dumped to `CCD/IMG/SUB` with [CloneCD](https://clonecd.en.softonic.com/). Note that newer versions of Windows are known to cause issues with this method in some cases. If none of the conversion methods listed here are yielding a successfully booting `CCD/IMG/SUB` disc image and DAEMON Tools combined with CloneCD on a modern version of Windows is also failing to produce a working disc image, provision a Windows XP virtual machine. Then, use DAEMON Tools v3.47 to mount the source disc image. Lastly, dump the disc image mounted in the virtual CD-ROM drive to `CCD/IMG/SUB` using CloneCD, or to `CDI` using DiscJuggler v6.00.1400 ([link 1](https://www.afterdawn.com/software/cd_dvd/burning/padus_disc_juggler.cfm), [link 2](https://archive.org/details/disc-juggler-pro-v-6.00.1400)). Rhea/Phoebe supports both `CCD/IMG/SUB` and `CDI` formats.
+### Convert Individual Disc Images With CUE2CCD
+1. Drag `.CUE` file onto `cue2ccd.exe` to perform conversion of a single disc image.
+2. Converted disc image will be generated in a folder named `CCD`.
+
+### Batch Convert Multiple Disc Images with CUE2CCD Script
+1. Ensure that [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/) is downloaded and in the same folder as `batch_convert_cue_to_ccd.bat`.
+2. Drag a folder containing disc images to be converted directly onto the batch script. Note that any degree of nested subfolders is supported.
+3. Console output will appear with status update messages, and `success.log` and `error.log` files will be written to record conversion history.
+4. Original disc images inside the folder dragged onto the batch script will be deleted and replaced with converted ones in `CCD/IMG/SUB` format.
+
+### Sega Saturn Patcher
+1. Launch application and then choose "Select Saturn Game".
+2. Click "Rebuild Image" at the bottom-right of the application.
+3. Under the "Save as type" dropdown, select `CCD/IMG file (*.img)`.
+4. Navigate to desired output location and then click "Save" to generate converted disc image.
+
+### Manual Dumping with DAEMON Tools + CloneCD
+1. Ensure your disc image uses a `.CUE` file for its table of contents.
+2. Mount the `.CUE` file with [DAEMON Tools](https://www.daemon-tools.cc).
+3. Use [CloneCD](https://clonecd.en.softonic.com/) to dump the mounted image to `CCD/IMG/SUB` format.
+
+#### Troubleshooting
+Newer versions of Windows may cause issues with the DAEMON Tools + CloneCD method. If conversion with all options listed above, the following process can be followed to produce a successfully booting `CCD/IMG/SUB` (or `CDI`) disc image.
+1. Provision a Windows XP virtual machine using a platform like [VMware](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion) or [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+3. Inside the VM, use DAEMON Tools [v3.47](https://archive.org/details/daemon-tools-347) to mount the source image.
+4. Use CloneCD to dump to `CCD/IMG/SUB`, or [DiscJuggler v6.00.1400](https://archive.org/details/disc-juggler-pro-v-6.00.1400) to dump to `CDI`.
 
 ## Basic Usage
 
