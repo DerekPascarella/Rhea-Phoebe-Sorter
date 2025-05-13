@@ -103,10 +103,12 @@ Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc
 
 ### Manual Dumping with DAEMON Tools and CloneCD/DiscJuggler
 1. Mount the source disc image's `CUE` sheet with [DAEMON Tools](https://www.daemon-tools.cc).
-2. Use [CloneCD](https://clonecd.en.softonic.com/) to dump the contents of the virtual CD-ROM drive hosting the mounted image to `CCD/IMG/SUB` format.
+2. Dump the contents of the virtual CD-ROM drive to a compatible disc image format.
+   - Use [CloneCD](https://clonecd.en.softonic.com/) to dump to `CCD/IMG/SUB` format.
+   - Use [DiscJuggler](https://en.wikipedia.org/wiki/DiscJuggler) to dump to `CDI` format.
 
 #### Troubleshooting
-Newer versions of Windows may cause issues with the DAEMON Tools + CloneCD method. If conversion with all options listed above, the following process can be followed to produce a successfully booting `CCD/IMG/SUB` (or `CDI`) disc image.
+Newer versions of Windows may cause issues with the DAEMON Tools and CloneCD/DiscJuggler method. If conversion with all options listed above, the following process can be followed to produce a successfully booting `CCD/IMG/SUB` (or `CDI`) disc image.
 1. Provision a Windows XP virtual machine using a platform like [VMware](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion) or [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
 3. Inside the VM, use a specific version of DAEMON Tools ([v3.47](https://archive.org/details/daemon-tools-347)) to mount the source image.
 4. Use CloneCD to dump to `CCD/IMG/SUB`, or a specific version of DiscJuggler ([v6.00.1400](https://archive.org/details/disc-juggler-pro-v-6.00.1400)) to dump to `CDI`.
