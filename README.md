@@ -105,7 +105,7 @@ Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc
 4. Original disc images inside the folder dragged onto the batch script will be deleted and replaced with converted ones in `CCD/IMG/SUB` format.
 
 ### Sega Saturn Patcher
-1. Launch application and then choose "Select Saturn Game".
+1. Launch the [Sega Saturn Patcher](https://segaxtreme.net/resources/sega-saturn-patcher.73/) application and then choose "Select Saturn Game".
 2. Click "Rebuild Image" at the bottom-right of the application.
 3. Under the "Save as type" dropdown, select `CCD/IMG file (*.img)`.
 4. Navigate to desired output location and then click "Save" to generate converted disc image.
