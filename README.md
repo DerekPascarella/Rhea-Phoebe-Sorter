@@ -51,7 +51,7 @@ F:\
 - [Menu Migration for Pre-Existing Rhea/Phoebe SD Cards](#menu-migration-for-pre-existing-rheaphoebe-sd-cards)
 
 ## Current Version
-Rhea/Phoebe Sorter is currently at version [1.7](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.7/Rhea-Phobe.Sorter.v1.7.zip).
+Rhea/Phoebe Sorter is currently at version [1.8](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.8/Rhea-Phobe.Sorter.v1.8.zip).
 
 ## Changelog
 - **Version 1.8 (2025-06-05)**
