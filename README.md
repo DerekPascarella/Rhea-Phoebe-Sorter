@@ -170,7 +170,7 @@ There are two methods by which users can modify metadata associated with an indi
 
 #### Method 2
 
-This method requires the use of version 1.8 of Rhea/Phoebe Sorter or newer. Furthermore, an SD card must be processed at least once (even without changes) by version 1.8 or newer for this method to work.
+This method requires that an SD card is processed at least once (even without changes) by version 1.8 or newer.
 
 1. Open `GameList.txt` in the root of the SD card and identify each disc image with metadata that is to be modified.
 2. Edit `GameList.txt` directly to make desired changes to any of the three supported properties: game labels, virtual folder paths, and disc numbers.
