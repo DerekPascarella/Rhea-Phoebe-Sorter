@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Rhea/Phoebe Sorter v1.7
+# Rhea/Phoebe Sorter v1.8
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -15,7 +15,7 @@ use Fcntl ("SEEK_SET");
 use Errno ("EACCES", "EBUSY");
 
 # Set version number.
-my $version = "1.7";
+my $version = "1.8";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
@@ -69,6 +69,90 @@ print "         will result in data corruption!\n\n";
 print "Press Enter to continue...\n";
 
 <STDIN>;
+
+# If last automatically generated GameList.txt file exists, perform comparison with
+# current version in root of SD card to identify bulk changes to be carried out.
+if(-e $sd_path_source . "\\01\\GameList.txt" && !files_are_identical($sd_path_source . "\\GameList.txt", $sd_path_source . "\\01\\GameList.txt"))
+{
+	# Status message and prompt.
+	my $bulk_prompt;
+
+	print "The \"GameList.txt\" file in the root of the SD card has been changed since\n";
+	print "the last time it was processed. Modify disc image metadata to reflect changes\n";
+	print "made to the list text file? (Y/N) ";
+
+	while($bulk_prompt ne "Y" && $bulk_prompt ne "N")
+	{
+		chop($bulk_prompt = uc(<STDIN>));
+	}
+
+	# Perform bulk modification.
+	if($bulk_prompt eq "Y")
+	{
+		# Find changed lines in GameList.txt.
+		my $list_old = read_file($sd_path_source . "\\01\\GameList.txt");
+		my $list_new = read_file($sd_path_source . "\\GameList.txt");
+
+		my @lines_old = split(/\R/, $list_old);
+		my @lines_new = split(/\R/, $list_new);
+
+		my @lines_changed;
+
+		my $max = @lines_old > @lines_new ? @lines_old : @lines_new;
+
+		for(my $i = 0; $i < $max; $i ++)
+		{
+			my $old = $lines_old[$i];
+			my $new = $lines_new[$i];
+
+			push(@lines_changed, $new) if($old ne $new);
+		}
+
+		# Process each changed line.
+		foreach my $line (@lines_changed)
+		{
+			# Extract folder number, disc image label, virtual folder path, and disc
+			# number from modified GameList.txt line.
+			my ($folder_number, $new_folder_and_name, $new_disc) = $line =~ /^\s*(\d+)\s*-\s*(.*?)(?:\s*\(Disc\s*(\d+\/\d+)\))?\s*$/;
+
+			$new_disc //= "";
+			
+			my $new_disc_number = "";
+			$new_disc_number = $1 if($new_disc =~ m{^(\d+)/\d+$});
+
+			my ($new_folder, $new_name);
+
+			if($new_folder_and_name =~ /^(.*)\/([^\/]+)$/)
+			{
+				$new_folder = $1;
+				$new_name = $2;
+			}
+			else
+			{
+				$new_folder = "";
+				$new_name = $new_folder_and_name;
+			}
+
+			$new_name .= " - Disc " . $new_disc_number if($new_disc ne "");
+
+			# Update metadata text files.
+			write_file($sd_path_source . "\\" . $folder_number . "\\Name.txt", $new_name);
+			write_file($sd_path_source . "\\" . $folder_number . "\\Folder.txt", $new_folder) if($new_folder ne "");
+			write_file($sd_path_source . "\\" . $folder_number . "\\Disc.txt", $new_disc) if($new_disc ne "");
+
+			# If applicable, remove previous instance of Folder.txt.
+			unlink($sd_path_source . "\\" . $folder_number . "\\Folder.txt") if($new_folder eq "");
+
+			# If applicable, restore default disc number in Disc.txt.
+			write_file($sd_path_source . "\\" . $folder_number . "\\Disc.txt", "1/1") if($new_disc eq "");
+		}
+
+		# Status message.
+		print "\nMetadata update complete!\n";
+	}
+
+	print "\n";
+}
 
 # If RmenuKai is detected, prompt for virtual folder processing of multi-disc games.
 my $multidisc_subfolders = 0;
@@ -192,7 +276,7 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b } readdir($sd_path_source_
 				\s*$                   # to end of string
 			}{/Disc $1}ix;
 
-			# Remove leading virtual-folder path only.
+			# Remove leading virtual folder path only.
 			(my $base_name = $game_name) =~ s{^.*/}{};
 
 			# Normalize whitespace.
@@ -205,7 +289,7 @@ foreach my $sd_subfolder (sort { 'numeric'; $a <=> $b } readdir($sd_path_source_
 			# Iterate through each existing key in the game list and metadata hashes.
 			foreach my $existing_key (keys %game_list, keys %metadata)
 			{
-				# Remove leading virtual-folder path only.
+				# Remove leading virtual folder path only.
 				(my $existing_base = $existing_key) =~ s{^.*/}{};				
 				
 				# Normalize whitespace.
@@ -739,6 +823,9 @@ if(-e $sd_path_source . "\\01\\BIN\\mkisofs.exe")
 	# Write separate game list to root of SD card for user convenience.
 	write_file($sd_path_source . "\\GameList.txt", $game_list);
 
+	# Make copy of game list to support bulk editing (i.e., allow change detection).
+	copy($sd_path_source . "\\GameList.txt", $sd_path_source . "\\01\\GameList.txt");
+
 	# Change to "01" folder and build RMENU ISO.
 	chdir($sd_path_source . "\\01\\");
 	system("BIN\\mkisofs.exe -quiet -sysid \"SEGA SATURN\" -volid \"RMENU\" -volset \"RMENU\" -publisher \"SEGA ENTERPRISES, LTD.\" -preparer \"SEGA ENTERPRISES, LTD.\" -appid \"RMENU\" -abstract \"ABS.TXT\" -copyright \"CPY.TXT\" -biblio \"BIB.TXT\" -generic-boot BIN\\RMENU\\IP.BIN -full-iso9660-filenames -o RMENU.iso BIN\\RMENU");
@@ -1035,4 +1122,46 @@ sub rename_until_free
 
 		die "Fatal error trying to move \"$source\" to \"$destination\":\n$!\n";
 	}
+}
+
+# Subroutine to determine if two specified files are identical.
+#
+# 1st parameter - Full path of first file.
+# 2nd parameter - Full path of second file.
+sub files_are_identical
+{
+	my $file1 = $_[0];
+	my $file2 = $_[1];
+
+	my $size1 = -s $file1;
+	my $size2 = -s $file2;
+
+	return 0 if(!defined $size1 || !defined $size2);
+	return 0 if($size1 != $size2);
+
+	open(my $filehandle1, '<', $file1) or return 0;
+	open(my $filehandle2, '<', $file2) or return 0;
+	binmode $filehandle1;
+	binmode $filehandle2;
+
+	my $buffer1;
+	my $buffer2;
+
+	while (1)
+	{
+		my $read1 = read($filehandle1, $buffer1, 4096);
+		my $read2 = read($filehandle2, $buffer2, 4096);
+
+		# Both files reached EOF
+		last if $read1 == 0 && $read2 == 0;
+
+		# Mismatch in read length or content
+		return 0 if $read1 != $read2;
+		return 0 if $buffer1 ne $buffer2;
+	}
+
+	close($filehandle1);
+	close($filehandle2);
+
+	return 1;
 }

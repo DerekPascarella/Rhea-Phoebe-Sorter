@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Menu Migrator for Rhea/Phoebe Sorter v1.7
+# Menu Migrator for Rhea/Phoebe Sorter v1.8
 # Written by Derek Pascarella (ateam)
 #
 # SD card sorter for the Sega Saturn ODEs Rhea and Phoebe.
@@ -11,7 +11,7 @@ use Win32 ();
 use Errno ("EACCES", "EBUSY");
 
 # Set version number.
-my $version = "1.7";
+my $version = "1.8";
 
 # Set STDOUT encoding to UTF-8.
 binmode(STDOUT, "encoding(UTF-8)");
