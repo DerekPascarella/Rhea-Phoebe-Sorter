@@ -174,7 +174,7 @@ There are two methods by which users can modify metadata associated with an indi
 2. Edit `GameList.txt` directly to make desired changes to any of the three supported properties: game labels, virtual folder paths, and disc numbers.
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
-Note that tere is minimal error handling for user mistakes when manually editing `GameList.txt`. One must be careful when making changes to avoid breaking the expected formatting.
+Note that there is minimal error handling for user mistakes when manually editing `GameList.txt`. One must be careful when making changes to avoid breaking the expected formatting.
 
 As an example, `GameList.txt` may contain the following.
 
@@ -184,7 +184,7 @@ As an example, `GameList.txt` may contain the following.
 03 - Grandia (T-En) (Disc 2/2)
 ```
 
-However, the user wishes to place grandia into a virtual subfolder named `RPGs`. To do so, they would make these simple modifications.
+However, the user wishes to place Grandia into a virtual subfolder named `RPGs`. To do so, they would make these simple modifications.
 
 ```
 01 - RMENU
