@@ -55,7 +55,7 @@ Rhea/Phoebe Sorter is currently at version [1.8](https://github.com/DerekPascare
 
 ## Changelog
 - **Version 1.8 (2025-06-05)**
-  * Game labels, virtual folder paths, and disc numbers can now be modified in `GameList.txt` before processing SD card instead of solely by modifying metadata text files (e.g., `Name.txt`, `Folder.txt`) inside of numbered folders.
+  * Game labels, virtual folder paths, and disc numbers can now be modified in `GameList.txt` before processing SD card instead of solely by modifying metadata text files (e.g., `Name.txt`, `Folder.txt`) inside of numbered folders (read more [#method-2](here)).
 - **Version 1.7 (2025-05-12)**
   * If files/folders are locked by another process when Rhea/Phebe Sorter attempts to move/rename them, a prompt will now be displayed giving the user the opportunity to close said processes before proceeding, instead of those locked files/folders being skipped.
   * Reduced total SD card processing time by up to 75% with new sorting algorithm.
@@ -169,6 +169,8 @@ There are two methods by which users can modify metadata associated with an indi
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
 
 #### Method 2
+
+This method requires the use of version 1.8 of Rhea/Phoebe Sorter or newer. Furthermore, an SD card must be processed at least once (even without changes) by version 1.8 or newer for this method to work.
 
 1. Open `GameList.txt` in the root of the SD card and identify each disc image with metadata that is to be modified.
 2. Edit `GameList.txt` directly to make desired changes to any of the three supported properties: game labels, virtual folder paths, and disc numbers.
