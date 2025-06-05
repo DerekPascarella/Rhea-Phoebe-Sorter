@@ -43,6 +43,8 @@ F:\
   - [Adding New Games](#adding-new-games)
   - [Removing Existing Games](#removing-existing-games)
   - [Changing Game Labels, Virtual Folder Paths, and Other Metadata](#changing-game-labels-virtual-folder-paths-and-other-metadata)
+    - [Method 1](#method-1)
+    - [Method 2](#method-2)
   - [Modifying Product ID](#modifying-product-id)
   - [Multi-Disc Games with RmenuKai](#multi-disc-games-with-rmenukai)
   - [Adding an Instance of Legacy RMENU Alongside RmenuKai](#adding-an-instance-of-legacy-rmenu-alongside-rmenukai)
@@ -52,6 +54,8 @@ F:\
 Rhea/Phoebe Sorter is currently at version [1.7](https://github.com/DerekPascarella/Rhea-Phoebe-Sorter/releases/download/1.7/Rhea-Phobe.Sorter.v1.7.zip).
 
 ## Changelog
+- **Version 1.8 (2025-06-05)**
+  * Game labels, virtual folder paths, and disc numbers can now be modified in `GameList.txt` before processing SD card instead of solely by modifying metadata text files (e.g., `Name.txt`, `Folder.txt`) inside of numbered folders.
 - **Version 1.7 (2025-05-12)**
   * If files/folders are locked by another process when Rhea/Phebe Sorter attempts to move/rename them, a prompt will now be displayed giving the user the opportunity to close said processes before proceeding, instead of those locked files/folders being skipped.
   * Reduced total SD card processing time by up to 75% with new sorting algorithm.
@@ -149,6 +153,10 @@ Using Rhea/Phoebe Sorter is simple, where each operation is carried out accordin
 
 ### Changing Game Labels, Virtual Folder Paths, and Other Metadata
 
+There are two methods by which users can modify metadata associated with an individual disc image. The first method offers total control over all pieces of metadata but can be more cumbersome, especially for bulk changes. The second method is convenient and allows quick changes, especially in bulk, but is limited to modification of game label, virtual folder path, and disc number.
+
+#### Method 1
+
 1. Open `GameList.txt` in the root of the SD card and then identify the numbered folder containing the disc image with metadata to be edited.
 2. Open the identified numbered folder, then open and make changes to the appropriate text file.
    - `Date.txt` - The game's release date
@@ -159,6 +167,30 @@ Using Rhea/Phoebe Sorter is simple, where each operation is carried out accordin
    - `Region.txt` - The game's region code
    - `Version.txt` - The game's version as specified by publisher
 3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
+
+#### Method 2
+
+1. Open `GameList.txt` in the root of the SD card and identify each disc image with metadata that is to be modified.
+2. Edit `GameList.txt` directly to make desired changes to any of the three supported properties: game labels, virtual folder paths, and disc numbers.
+3. Drag the SD card onto `orbital_organizer.exe` and watch the status messages until processing is complete.
+
+Note that tere is minimal error handling for user mistakes when manually editing `GameList.txt`. One must be careful when making changes to avoid breaking the expected formatting.
+
+As an example, `GameList.txt` may contain the following.
+
+```
+01 - RMENU
+02 - Grandia (T-En) (Disc 1/2)
+03 - Grandia (T-En) (Disc 2/2)
+```
+
+However, the user wishes to place grandia into a virtual subfolder named `RPGs`. To do so, they would make these simple modifications.
+
+```
+01 - RMENU
+02 - /RPGs/Grandia (T-En) (Disc 1/2)
+03 - /RPGs/Grandia (T-En) (Disc 2/2)
+```
 
 ### Modifying Product ID
 
