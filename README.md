@@ -55,7 +55,7 @@ Rhea/Phoebe Sorter is currently at version [1.8](https://github.com/DerekPascare
 
 ## Changelog
 - **Version 1.8 (2025-06-05)**
-  * Game labels, virtual folder paths, and disc numbers can now be modified in `GameList.txt` before processing SD card instead of solely by modifying metadata text files (e.g., `Name.txt`, `Folder.txt`) inside of numbered folders (read more [#method-2](here)).
+  * Game labels, virtual folder paths, and disc numbers can now be modified in `GameList.txt` before processing SD card instead of solely by modifying metadata text files (e.g., `Name.txt`, `Folder.txt`) inside of numbered folders (read more [here](#method-2)).
 - **Version 1.7 (2025-05-12)**
   * If files/folders are locked by another process when Rhea/Phebe Sorter attempts to move/rename them, a prompt will now be displayed giving the user the opportunity to close said processes before proceeding, instead of those locked files/folders being skipped.
   * Reduced total SD card processing time by up to 75% with new sorting algorithm.
