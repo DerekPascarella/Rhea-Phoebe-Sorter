@@ -95,7 +95,7 @@ Additionally, multiple game entries cannot point to the same disc image in the l
 Those new to the Rhea/Phoebe ODE may wonder the best methods for converting disc images to CloneCD format (i.e., `CCD/IMG/SUB`). There are several options, including batch conversion. In general, the below methods support conversion from any valid disc image that uses a `CUE` sheet for its table of contents (e.g., `CUE/BIN`, `CUE/ISO`, `CUE/ISO/WAV`).
 
 ### Convert Individual Disc Images With CUE2CCD
-1. Drag `CUE` file onto `cue2ccd.exe` to perform conversion of a single disc image.
+1. Drag `CUE` file onto the [CUE2CCD](https://segaxtreme.net/resources/cue2ccd.386/) program to perform conversion of a single disc image.
 2. Converted disc image will be generated in a folder named `CCD`.
 
 ### Batch Convert Multiple Disc Images with CUE2CCD Script
