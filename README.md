@@ -88,7 +88,7 @@ While Rhea/Phoebe Sorter is written in the cross-platform [Perl](https://www.per
 
 As of the latest version of Rhea/Phoebe Sorter, multiple game entries sharing the same labels are not supported if they are multi-disc games that are nested into one or more virtual subfolders (e.g., `/Games/RPGs/Grandia (T-En)/Disc 1` cannot co-exist with `/Games/A-Z/F-L/Grandia (T-En)/Disc 1`). However, multiple game entries sharing the same labels are supported for single-disc games that are nested into one or more virtual subfolders (e.g., `/Games/Shooters/Radiant Silvergun` can co-exist with `/Games/A-Z/M-S/Radiant Silvergun`).
 
-Additionally, multiple game entries cannot point to the same disc image in the latest version of Rhea/Phoebe Sorter. This is sometimes seen with RmenuKai users who have a genre-separated list, as well as a simple "A-Z" listing.
+Additionally, multiple game entries cannot point to the same numbered folder. This is a virtually non-existent scenario, but is sometimes seen with RmenuKai users who have a genre-separated list, as well as a simple "A-Z" listing.
 
 ## Converting Disc Images to CloneCD Format
 
